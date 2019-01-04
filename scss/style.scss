@@ -1,4 +1,4 @@
-@keyframes example {
+@keyframes fadeIn {
   from {opacity:  0;}
   to {opacity: 1;}
 }
@@ -35,7 +35,7 @@ body {
       width: 95%;
       height: 95%;
       border-radius: 50%;
-      animation-name: example;
+      animation-name: fadeIn;
       animation-duration: 2s;
     } .red {
       background-color: crimson;
