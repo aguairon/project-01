@@ -10,15 +10,15 @@ function addDisks(square, color) {
   }
 }
 
-function findSquare(x, y) {
+function findCell(x, y) {
   return document.querySelector('.column'+ x).querySelector('.row' + y)
 }
 
 function disksInitialPlace() {
-  addDisks(findSquare(3, 3), 'red')
-  addDisks(findSquare(3, 4), 'black')
-  addDisks(findSquare(4, 4), 'red')
-  addDisks(findSquare(4, 3), 'black')
+  addDisks(findCell(3, 3), 'red')
+  addDisks(findCell(3, 4), 'black')
+  addDisks(findCell(4, 4), 'red')
+  addDisks(findCell(4, 3), 'black')
 }
 
 function createBoard() {
