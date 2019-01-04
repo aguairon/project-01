@@ -1,18 +1,27 @@
 body {
+  img {
+    width: 10%;
+  }
   .game-board {
     display: flex;
     max-width: 640px;
-    border: 1px solid green;
+    border: 3px solid green;
     margin: 0 auto;
 
     .column {
-      // border: 1px solid blue;
       flex: 1;
     }
 
     .row {
       height: 80px;
-      border: 1px solid green;
+      border: 2px solid green;
+      display: flex;
+    }
+
+    .dot{
+      width: 100%;
+      border-radius: 50%;
+      background: red;
     }
   }
 
