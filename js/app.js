@@ -1,6 +1,25 @@
 let gameBoard
 let columns
 
+function addDisks(x, y, color) {
+  const disk = document.createElement('span')
+  disk.classList.add('disk')
+  disk.classList.add(color)
+  findSquare(x, y).append(disk)
+}
+
+function findSquare(x, y) {
+  const a = document.querySelector('.column'+ x).querySelector('.row' + y)
+  return a
+}
+
+function disksInitialPlace() {
+  addDisks(3, 3, 'red')
+  addDisks(3, 4, 'black')
+  addDisks(4, 4, 'red')
+  addDisks(4, 3, 'black')
+}
+
 function createBoard() {
   for(let i = 0; i < 8; i++) {
     const newColumn = document.createElement('div')
@@ -20,21 +39,7 @@ function createBoard() {
     }
   })
 
-  addDisks(3, 3)
-  addDisks(3, 4)
-  addDisks(4, 4)
-  addDisks(4, 3)
-}
-
-function addDisks(x, y) {
-  const disk = document.createElement('span')
-  disk.classList.add('disk')
-  findSquare(x, y).append(disk)
-}
-
-function findSquare(x, y) {
-  const a = document.querySelector('.column'+ x).querySelector('.row' + y)
-  return a
+  disksInitialPlace()
 }
 
 document.addEventListener('DOMContentLoaded', ()=>{
