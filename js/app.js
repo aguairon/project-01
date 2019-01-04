@@ -4,7 +4,6 @@ let black = true
 let colour
 
 function addDisks(square) {
-  console.log(square.nodeName)
   if(square.nodeName !== 'SPAN') {
     const disk = document.createElement('span')
     disk.classList.add('disk')
