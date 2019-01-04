@@ -1,11 +1,16 @@
 let gameBoard
 let columns
+let black = true
+let colour
 
-function addDisks(square, color) {
-  if(!square.querySelector('span')) {
+function addDisks(square) {
+  console.log(square.nodeName)
+  if(square.nodeName !== 'SPAN') {
     const disk = document.createElement('span')
     disk.classList.add('disk')
-    disk.classList.add(color)
+    black ? colour = 'black' : colour = 'red'
+    disk.classList.add(colour)
+    black = !black
     square.append(disk)
   }
 }
@@ -48,5 +53,5 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
   createBoard()
 
-  gameBoard.addEventListener('click', (e) =>  addDisks(e.target, 'red'))
+  gameBoard.addEventListener('click', (e) =>  addDisks(e.target))
 })

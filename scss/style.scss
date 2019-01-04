@@ -1,3 +1,8 @@
+@keyframes example {
+  from {opacity:  0;}
+  to {opacity: 1;}
+}
+
 body {
   img {
     width: 10%;
@@ -25,10 +30,12 @@ body {
       width: 95%;
       height: 95%;
       border-radius: 50%;
+      animation-name: example;
+      animation-duration: 2s;
     } .red {
-      background: crimson;
+      background-color: crimson;
     } .black {
-      background: black;
+      background-color: black;
     }
   }
 }
