@@ -2,10 +2,12 @@ let gameBoard
 let columns
 
 function addDisks(square, color) {
-  const disk = document.createElement('span')
-  disk.classList.add('disk')
-  disk.classList.add(color)
-  square.append(disk)
+  if(!square.querySelector('span')) {
+    const disk = document.createElement('span')
+    disk.classList.add('disk')
+    disk.classList.add(color)
+    square.append(disk)
+  }
 }
 
 function findSquare(x, y) {
