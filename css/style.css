@@ -1,2 +1,2 @@
-body img{width:10%}body .game-board{display:flex;max-width:640px;border:3px solid green;margin:0 auto}body .game-board .column{flex:1}body .game-board .row{height:80px;border:2px solid green;display:flex}body .game-board .dot{width:100%;border-radius:50%;background:red}body h1{color:red}
+body img{width:10%}body .game-board{display:flex;max-width:640px;border:3px solid green;margin:0 auto}body .game-board .column{flex:1}body .game-board .row{height:80px;border:2px solid green;display:flex;justify-content:center;align-items:center}body .game-board .dot{width:95%;height:95%;border-radius:50%;background:red}body h1{color:red}
 /*# sourceMappingURL=style.css.map */
