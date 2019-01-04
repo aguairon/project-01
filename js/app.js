@@ -41,15 +41,10 @@ function createBoard() {
   disksInitialPlace()
 }
 
-function aver(e) {
-  console.log('pepe')
-  console.log(e.target)
-}
-
 document.addEventListener('DOMContentLoaded', ()=>{
   gameBoard = document.querySelector('.game-board')
 
   createBoard()
 
-  gameBoard.addEventListener('click', aver)
+  gameBoard.addEventListener('click', (e) =>  addDisks(e.target, 'red'))
 })
