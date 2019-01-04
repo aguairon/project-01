@@ -1,5 +1,24 @@
-$color: peachpuff;
+body {
+  .game-board {
+    display: flex;
+    max-width: 640px;
+    border: 1px solid green;
+    margin: 0 auto;
 
-h1 {
-  color: $color;
+    .column {
+      // border: 1px solid blue;
+      flex: 1;
+    }
+
+    .row {
+      height: 80px;
+      border: 1px solid green;
+    }
+  }
+
+  h1 {
+    color: red;
+  }
+
+
 }
