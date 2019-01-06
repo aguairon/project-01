@@ -13,47 +13,44 @@ body {
     }
   }
 
-  .score {
-    width: calc(#{$height} * 8);
-    display: flex;
-            justify-content: space-between;
+  main {
+    max-width: calc(#{$height} * 8);
     margin: 0 auto;
-    div {
-      padding: 10px;
-    }
-  }
-
-  .game-board {
-    display: flex;
-    max-width: calc(#{$height} * 8)
-
-    ;
-    border: 3px solid $border-color;
-    margin: 0 auto;
-
-    .column {
-      flex: 1;
-    }
-
-    .row {
-      height: $height;
-      border: 2px solid $border-color;
+    .score {
       display: flex;
-      justify-content: center;
-      align-items: center;
-
+      justify-content: space-between;
+      div {
+        padding: 10px;
+      }
     }
 
-    .disk{
-      width: 95%;
-      height: 95%;
-      border-radius: 50%;
-      animation-name: fadeIn;
-      animation-duration: 2s;
-    } .red {
-      background-color: crimson;
-    } .black {
-      background-color: $border-color;
+    .game-board {
+      display: flex;
+      border: 3px solid $border-color;
+      .column {
+        flex: 1;
+      }
+
+      .row {
+        height: $height;
+        border: 2px solid $border-color;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+      }
+
+      .disk{
+        width: 95%;
+        height: 95%;
+        border-radius: 50%;
+        animation-name: fadeIn;
+        animation-duration: 2s;
+      } .red {
+        background-color: crimson;
+      } .black {
+        background-color: $border-color;
+      }
     }
   }
 }
