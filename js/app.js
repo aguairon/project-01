@@ -2,15 +2,43 @@ let gameBoard
 let columns
 let black = true
 let colour
+let redScore
+let blackScore
+let redDisks = 32
+let blackDisks = 32
+
+function calculateScore() {
+  redScore = 32 - redDisks
+  blackScore = 32 - blackDisks
+}
+
+function setScore() {
+  const red = document.querySelector('.red')
+  red.innerText= redScore
+
+  const black = document.querySelector('.black')
+  black.innerText= blackScore
+}
+
+function currentPlayer() {
+  return black ? colour = 'black' : colour = 'red'
+}
 
 function addDisks(square) {
   if(square.nodeName !== 'SPAN') {
+    colour = currentPlayer()
+    // take number of disks used from available disks
+    black ? blackDisks -=  1 : redDisks -= 1
+    console.log(blackDisks)
+    //change turns
+    black = !black
+
     const disk = document.createElement('span')
     disk.classList.add('disk')
-    black ? colour = 'black' : colour = 'red'
     disk.classList.add(colour)
-    black = !black
     square.append(disk)
+    calculateScore()
+    setScore()
   }
 }
 
@@ -51,6 +79,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
   gameBoard = document.querySelector('.game-board')
 
   createBoard()
+  calculateScore()
+  setScore()
 
   gameBoard.addEventListener('click', (e) =>  addDisks(e.target))
 })
