@@ -2,34 +2,41 @@ let gameBoard
 let columns
 let black = true
 let colour
-let redScore
-let blackScore
-let redDisks = 32
-let blackDisks = 32
 
-function calculateScore() {
-  redScore = 32 - redDisks
-  blackScore = 32 - blackDisks
+const redPlayer = {
+  color: 'red',
+  numberOfDisks: 32,
+  calculateScore: function() {
+    return 32 - parseInt(this.numberOfDisks)
+  }
+}
+
+const blackPlayer = {
+  color: 'black',
+  numberOfDisks: 32,
+  calculateScore: function() {
+    return 32 - parseInt(this.numberOfDisks)
+  }
 }
 
 function setScore() {
   const red = document.querySelector('.red')
-  red.innerText= redScore
+  red.innerText= redPlayer.calculateScore()
 
   const black = document.querySelector('.black')
-  black.innerText= blackScore
+  black.innerText= blackPlayer.calculateScore()
 }
 
 function currentPlayer() {
-  return black ? colour = 'black' : colour = 'red'
+  return black ? blackPlayer.color : redPlayer.color = 'red'
 }
 
 function addDisks(square) {
   if(square.nodeName !== 'SPAN') {
     colour = currentPlayer()
     // take number of disks used from available disks
-    black ? blackDisks -=  1 : redDisks -= 1
-    console.log(blackDisks)
+    black ? blackPlayer.numberOfDisks -=  1 : redPlayer.numberOfDisks -= 1
+
     //change turns
     black = !black
 
@@ -37,7 +44,6 @@ function addDisks(square) {
     disk.classList.add('disk')
     disk.classList.add(colour)
     square.append(disk)
-    calculateScore()
     setScore()
   }
 }
@@ -47,10 +53,10 @@ function findCell(x, y) {
 }
 
 function disksInitialPlace() {
-  addDisks(findCell(3, 3), 'red')
-  addDisks(findCell(3, 4), 'black')
-  addDisks(findCell(4, 4), 'red')
-  addDisks(findCell(4, 3), 'black')
+  addDisks(findCell(3, 3), redPlayer.color)
+  addDisks(findCell(3, 4), blackPlayer.color)
+  addDisks(findCell(4, 4), redPlayer.color)
+  addDisks(findCell(4, 3), blackPlayer.color)
 }
 
 function createBoard() {
@@ -79,8 +85,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   gameBoard = document.querySelector('.game-board')
 
   createBoard()
-  calculateScore()
-  setScore()
 
   gameBoard.addEventListener('click', (e) =>  addDisks(e.target))
 })
