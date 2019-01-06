@@ -7,9 +7,22 @@ $border-color: #4b4b4b;
 $height: 70px;
 
 body {
-  img {
-    width: 10%;
+  header {
+    img {
+      height: 100px;
+    }
   }
+
+  .score {
+    width: calc(#{$height} * 8);
+    display: flex;
+            justify-content: space-between;
+    margin: 0 auto;
+    div {
+      padding: 10px;
+    }
+  }
+
   .game-board {
     display: flex;
     max-width: calc(#{$height} * 8)
