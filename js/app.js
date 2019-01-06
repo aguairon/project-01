@@ -1,7 +1,6 @@
 let gameBoard
 let columns
 let black = true
-let colour
 
 const redPlayer = {
   color: 'red',
@@ -28,12 +27,12 @@ function setScore() {
 }
 
 function currentPlayer() {
-  return black ? blackPlayer.color : redPlayer.color = 'red'
+  return black ? blackPlayer : redPlayer
 }
 
 function addDisks(square) {
   if(square.nodeName !== 'SPAN') {
-    colour = currentPlayer()
+    const player  = currentPlayer()
     // take number of disks used from available disks
     black ? blackPlayer.numberOfDisks -=  1 : redPlayer.numberOfDisks -= 1
 
@@ -42,7 +41,7 @@ function addDisks(square) {
 
     const disk = document.createElement('span')
     disk.classList.add('disk')
-    disk.classList.add(colour)
+    disk.classList.add(player.color)
     square.append(disk)
     setScore()
   }
