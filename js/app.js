@@ -44,12 +44,13 @@ function play(square) {
   if(square.classList[0] === 'square') {
     const validMoves = [-1, + 1, -8, +8]
 
+    // console.log(currentPlayer().color)
     // console.log( square)
     // console.log(document.getElementById(parseInt(square.id)))
     validMoves.forEach(move => {
       if(document.getElementById(parseInt(square.id) + move)) {
         if (document.getElementById(parseInt(square.id) + move).querySelector('div')) {
-          if(document.getElementById(parseInt(square.id) + move).querySelector('div').classList[1] === 'red'){
+          if(document.getElementById(parseInt(square.id) + move).querySelector('div').classList[1] !== currentPlayer().color){
             console.log(document.getElementById(parseInt(square.id) + move).querySelector('div').classList[1])
             addDisk(square)
           } else {
