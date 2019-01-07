@@ -1,7 +1,7 @@
 let gameBoard
-let blacksTurn = true
 let redScore
 let blackScore
+let blacksTurn = true
 
 const redPlayer = {
   color: 'red',
@@ -28,20 +28,25 @@ function currentPlayer() {
   return blacksTurn ? blackPlayer : redPlayer
 }
 
+function addDisk(square) {
+  const player  = currentPlayer()
+  const disk = document.createElement('div')
+  disk.classList.add('disk')
+  disk.classList.add(player.color)
+  square.append(disk)
+
+  blacksTurn = !blacksTurn
+  setScore()
+}
+
 function play(square) {
-  console.log(square.classList[0])
+  console.log(square)
   if(square.classList[0] === 'square') {
-    const player  = currentPlayer()
     blacksTurn ? blackPlayer.numberOfDisks -=  1 : redPlayer.numberOfDisks -= 1
 
-    //change turns
-    blacksTurn = !blacksTurn
-
-    const disk = document.createElement('div')
-    disk.classList.add('disk')
-    disk.classList.add(player.color)
-    square.append(disk)
-    setScore()
+    if (document.getElementById(square.id - 1).querySelector('.red')) {
+      addDisk(square)
+    }
   }
 }
 
@@ -50,10 +55,10 @@ function findCell(x) {
 }
 
 function playerInitialPlace() {
-  play(findCell(27), redPlayer.color)
-  play(findCell(28), blackPlayer.color)
-  play(findCell(35), redPlayer.color)
-  play(findCell(36), blackPlayer.color)
+  addDisk(findCell(27))
+  addDisk(findCell(28))
+  addDisk(findCell(36))
+  addDisk(findCell(35))
 }
 
 function createBoard() {
