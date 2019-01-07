@@ -30,10 +30,9 @@ function currentPlayer() {
 
 function addDisk(square) {
   blacksTurn ? blackPlayer.numberOfDisks -=  1 : redPlayer.numberOfDisks -= 1
-  const player  = currentPlayer()
   const disk = document.createElement('div')
   disk.classList.add('disk')
-  disk.classList.add(player.color)
+  disk.classList.add(currentPlayer().color)
   square.append(disk)
 
   blacksTurn = !blacksTurn
@@ -86,20 +85,24 @@ function isAnyDiskToTheRightTheSame(square) {
 
 }
 
+function isSquareEmpty(square) {
+  return square.classList[0] === 'square'
+}
+
 function play(square) {
-  if(square.classList[0] === 'square') {
+  if(isSquareEmpty(square)) {
     console.log(isAdjacentDiskOpposite(square))
-
-
-
+    if (isAdjacentDiskOpposite(square)) addDisk(square)
   }
 }
 
-function playerInitialPlace() {
-  addDisk(document.getElementById(27))
-  addDisk(document.getElementById(28))
-  addDisk(document.getElementById(36))
-  addDisk(document.getElementById(35))
+function findSquare(id) {
+  return document.getElementById(id)
+}
+
+function playersInitialPositions() {
+  const initialPositions = [27, 28, 36, 35]
+  initialPositions.forEach(position => addDisk(findSquare(position)))
 }
 
 function createBoard() {
@@ -110,7 +113,7 @@ function createBoard() {
     gameBoard.append(square)
   }
 
-  playerInitialPlace()
+  playersInitialPositions()
 }
 
 document.addEventListener('DOMContentLoaded', ()=>{
