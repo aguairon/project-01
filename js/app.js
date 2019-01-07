@@ -28,14 +28,22 @@ function currentPlayer() {
   return blacksTurn ? blackPlayer : redPlayer
 }
 
-function addDisk(square) {
+function reduceAvailableDisks() {
   blacksTurn ? blackPlayer.numberOfDisks -=  1 : redPlayer.numberOfDisks -= 1
+}
+
+function changePlayersTurn() {
+  blacksTurn = !blacksTurn
+}
+
+function addDisk(square) {
   const disk = document.createElement('div')
   disk.classList.add('disk')
   disk.classList.add(currentPlayer().color)
   square.append(disk)
 
-  blacksTurn = !blacksTurn
+  reduceAvailableDisks()
+  changePlayersTurn()
   setScore()
 }
 
@@ -121,7 +129,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   redScore = document.querySelector('.red')
   blackScore = document.querySelector('.black')
   createBoard()
-
 
   gameBoard.addEventListener('click', (e) =>  play(e.target))
 })
