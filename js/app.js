@@ -53,15 +53,11 @@ function play(square) {
   }
 }
 
-function findCell(x) {
-  return document.getElementById(x)
-}
-
 function playerInitialPlace() {
-  addDisk(findCell(27))
-  addDisk(findCell(28))
-  addDisk(findCell(36))
-  addDisk(findCell(35))
+  addDisk(document.getElementById(27))
+  addDisk(document.getElementById(28))
+  addDisk(document.getElementById(36))
+  addDisk(document.getElementById(35))
 }
 
 function createBoard() {
