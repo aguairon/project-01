@@ -29,7 +29,7 @@ function currentPlayer() {
 }
 
 function reduceAvailableDisks() {
-  blacksTurn ? blackPlayer.numberOfDisks -=  1 : redPlayer.numberOfDisks -= 1
+  currentPlayer().numberOfDisks -= 1
 }
 
 function changePlayersTurn() {
@@ -41,7 +41,10 @@ function addDisk(square) {
   disk.classList.add('disk')
   disk.classList.add(currentPlayer().color)
   square.append(disk)
+}
 
+function playDisk(square) {
+  addDisk(square)
   reduceAvailableDisks()
   changePlayersTurn()
   setScore()
@@ -104,7 +107,7 @@ function isSquareEmpty(square) {
 function play(square) {
   if(isSquareEmpty(square)) {
     isAnyDiskToTheRightTheSame(square) //todo
-    if (isAdjacentDiskOpposite(square)) addDisk(square)
+    if (isAdjacentDiskOpposite(square)) playDisk(square)
   }
 }
 
@@ -114,7 +117,7 @@ function findSquare(id) {
 
 function playersInitialPositions() {
   const initialPositions = [27, 28, 36, 35]
-  initialPositions.forEach(position => addDisk(findSquare(position)))
+  initialPositions.forEach(position => playDisk(findSquare(position)))
 }
 
 function createBoard() {
