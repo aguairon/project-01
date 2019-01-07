@@ -41,21 +41,15 @@ function addDisk(square) {
 }
 
 function play(square) {
-  // console.log(document.getElementById(parseInt(square.id) + 1).querySelector(''))
-
-  // console.log(document.getElementById(parseInt(square.id) - 1).querySelector(blacksTurn ?  '.red' : '.black'))
   if(square.classList[0] === 'square') {
-    const previous = document.getElementById(parseInt(square.id) - 1)
-    const after = document.getElementById(parseInt(square.id) + 1)
-    const above = document.getElementById(parseInt(square.id) + 8)
-    const below = document.getElementById(parseInt(square.id) - 8)
+    const validMoves = [-1, + 1, -8, +8]
 
-    if (after.querySelector(blacksTurn ?  '.red' : '.black')
-      || previous.querySelector(blacksTurn ?  '.red' : '.black')
-      || above.querySelector(blacksTurn ?  '.red' : '.black')
-      || below.querySelector(blacksTurn ?  '.red' : '.black')) {
-      addDisk(square)
-    }
+    validMoves.forEach(move => {
+      // console.log(parseInt(square.id), move, parseInt(square.id) + move)
+      if (document.getElementById(parseInt(square.id) + move).querySelector(blacksTurn ?  '.red' : '.black')) {
+        addDisk(square)
+      }
+    })
   }
 }
 
