@@ -1,6 +1,8 @@
 let gameBoard
 let columns
-let black = true
+let blacksTurn = true
+let redScore
+let blackScore
 
 const redPlayer = {
   color: 'red',
@@ -19,28 +21,28 @@ const blackPlayer = {
 }
 
 function setScore() {
-  const red = document.querySelector('.red')
-  red.innerText= redPlayer.calculateScore()
-
-  const black = document.querySelector('.black')
-  black.innerText= blackPlayer.calculateScore()
+  redScore.innerText= redPlayer.calculateScore()
+  blackScore.innerText= blackPlayer.calculateScore()
 }
 
 function currentPlayer() {
-  return black ? blackPlayer : redPlayer
+  return blacksTurn ? blackPlayer : redPlayer
 }
 
 function play(square) {
+  console.log(square.parentElement.classList[1])
+
   if(square.nodeName === 'DIV' && !square.hasChildNodes()) {
-    // if (true) {
+    console.log()
+    // if (square.) {
     //
     // }
 
     const player  = currentPlayer()
-    black ? blackPlayer.numberOfDisks -=  1 : redPlayer.numberOfDisks -= 1
+    blacksTurn ? blackPlayer.numberOfDisks -=  1 : redPlayer.numberOfDisks -= 1
 
     //change turns
-    black = !black
+    blacksTurn = !blacksTurn
 
     const disk = document.createElement('span')
     disk.classList.add('disk')
@@ -85,7 +87,8 @@ function createBoard() {
 
 document.addEventListener('DOMContentLoaded', ()=>{
   gameBoard = document.querySelector('.game-board')
-
+  redScore = document.querySelector('.red')
+  blackScore = document.querySelector('.black')
   createBoard()
 
 
