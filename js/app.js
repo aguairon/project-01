@@ -30,8 +30,9 @@ function currentPlayer() {
   return black ? blackPlayer : redPlayer
 }
 
-function addDisks(square) {
+function play(square) {
   if(square.nodeName !== 'SPAN') {
+    // console.log(square, square.hasChildNodes())
     const player  = currentPlayer()
     // take number of disks used from available disks
     black ? blackPlayer.numberOfDisks -=  1 : redPlayer.numberOfDisks -= 1
@@ -51,11 +52,11 @@ function findCell(x, y) {
   return document.querySelector('.column'+ x).querySelector('.row' + y)
 }
 
-function disksInitialPlace() {
-  addDisks(findCell(3, 3), redPlayer.color)
-  addDisks(findCell(3, 4), blackPlayer.color)
-  addDisks(findCell(4, 4), redPlayer.color)
-  addDisks(findCell(4, 3), blackPlayer.color)
+function playerInitialPlace() {
+  play(findCell(3, 3), redPlayer.color)
+  play(findCell(3, 4), blackPlayer.color)
+  play(findCell(4, 4), redPlayer.color)
+  play(findCell(4, 3), blackPlayer.color)
 }
 
 function createBoard() {
@@ -77,7 +78,7 @@ function createBoard() {
     }
   })
 
-  disksInitialPlace()
+  playerInitialPlace()
 }
 
 document.addEventListener('DOMContentLoaded', ()=>{
@@ -85,5 +86,5 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
   createBoard()
 
-  gameBoard.addEventListener('click', (e) =>  addDisks(e.target))
+  gameBoard.addEventListener('click', (e) =>  play(e.target))
 })
