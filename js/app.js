@@ -29,6 +29,7 @@ function currentPlayer() {
 }
 
 function addDisk(square) {
+  blacksTurn ? blackPlayer.numberOfDisks -=  1 : redPlayer.numberOfDisks -= 1
   const player  = currentPlayer()
   const disk = document.createElement('div')
   disk.classList.add('disk')
@@ -40,11 +41,19 @@ function addDisk(square) {
 }
 
 function play(square) {
-  console.log(square)
-  if(square.classList[0] === 'square') {
-    blacksTurn ? blackPlayer.numberOfDisks -=  1 : redPlayer.numberOfDisks -= 1
+  // console.log(document.getElementById(parseInt(square.id) + 1).querySelector(''))
 
-    if (document.getElementById(square.id - 1).querySelector('.red')) {
+  // console.log(document.getElementById(parseInt(square.id) - 1).querySelector(blacksTurn ?  '.red' : '.black'))
+  if(square.classList[0] === 'square') {
+    const previous = document.getElementById(parseInt(square.id) - 1)
+    const after = document.getElementById(parseInt(square.id) + 1)
+    const above = document.getElementById(parseInt(square.id) + 8)
+    const below = document.getElementById(parseInt(square.id) - 8)
+
+    if (after.querySelector(blacksTurn ?  '.red' : '.black')
+      || previous.querySelector(blacksTurn ?  '.red' : '.black')
+      || above.querySelector(blacksTurn ?  '.red' : '.black')
+      || below.querySelector(blacksTurn ?  '.red' : '.black')) {
       addDisk(square)
     }
   }
