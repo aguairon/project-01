@@ -44,10 +44,20 @@ function play(square) {
   if(square.classList[0] === 'square') {
     const validMoves = [-1, + 1, -8, +8]
 
+    // console.log( square)
+    // console.log(document.getElementById(parseInt(square.id)))
     validMoves.forEach(move => {
-      // console.log(parseInt(square.id), move, parseInt(square.id) + move)
-      if (document.getElementById(parseInt(square.id) + move).querySelector(blacksTurn ?  '.red' : '.black')) {
-        addDisk(square)
+      if(document.getElementById(parseInt(square.id) + move)) {
+        if (document.getElementById(parseInt(square.id) + move).querySelector('div')) {
+          if(document.getElementById(parseInt(square.id) + move).querySelector('div').classList[1] === 'red'){
+            console.log(document.getElementById(parseInt(square.id) + move).querySelector('div').classList[1])
+            addDisk(square)
+          } else {
+            console.log('nay')
+          }
+        } else {
+          return
+        }
       }
     })
   }
