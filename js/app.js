@@ -1,5 +1,4 @@
 let gameBoard
-let columns
 let blacksTurn = true
 let redScore
 let blackScore
@@ -30,21 +29,15 @@ function currentPlayer() {
 }
 
 function play(square) {
-  console.log(square.parentElement.classList[1])
-
-  if(square.nodeName === 'DIV' && !square.hasChildNodes()) {
-    console.log()
-    // if (square.) {
-    //
-    // }
-
+  console.log(square.classList[0])
+  if(square.classList[0] === 'square') {
     const player  = currentPlayer()
     blacksTurn ? blackPlayer.numberOfDisks -=  1 : redPlayer.numberOfDisks -= 1
 
     //change turns
     blacksTurn = !blacksTurn
 
-    const disk = document.createElement('span')
+    const disk = document.createElement('div')
     disk.classList.add('disk')
     disk.classList.add(player.color)
     square.append(disk)
@@ -52,35 +45,24 @@ function play(square) {
   }
 }
 
-function findCell(x, y) {
-  return document.querySelector('.column'+ x).querySelector('.row' + y)
+function findCell(x) {
+  return document.getElementById(x)
 }
 
 function playerInitialPlace() {
-  play(findCell(3, 3), redPlayer.color)
-  play(findCell(3, 4), blackPlayer.color)
-  play(findCell(4, 4), redPlayer.color)
-  play(findCell(4, 3), blackPlayer.color)
+  play(findCell(27), redPlayer.color)
+  play(findCell(28), blackPlayer.color)
+  play(findCell(35), redPlayer.color)
+  play(findCell(36), blackPlayer.color)
 }
 
 function createBoard() {
-  for(let i = 0; i < 8; i++) {
-    const newColumn = document.createElement('div')
-    newColumn.classList.add('column')
-    newColumn.classList.add('column'+ i)
-    gameBoard.append(newColumn)
+  for(let i = 0; i < 64; i++) {
+    const square = document.createElement('div')
+    square.classList.add('square')
+    square.setAttribute('id', i)
+    gameBoard.append(square)
   }
-
-  columns = document.querySelectorAll('.column')
-
-  columns.forEach(column => {
-    for(let i = 0; i < 8; i++) {
-      const newRow = document.createElement('div')
-      newRow.classList.add('row')
-      newRow.classList.add('row' + i)
-      column.append(newRow)
-    }
-  })
 
   playerInitialPlace()
 }

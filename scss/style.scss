@@ -14,7 +14,7 @@ body {
   }
 
   main {
-    max-width: calc(#{$height} * 8);
+    width: calc((#{$height} * 8) + 6px);
     margin: 0 auto;
     .score {
       display: flex;
@@ -25,24 +25,20 @@ body {
     }
 
     .game-board {
-      display: flex;
       border: 3px solid $border-color;
-      .column {
-        flex: 1;
-      }
-
-      .row {
-        height: $height;
+      display: flex;
+      flex-wrap: wrap;
+      box-sizing: border-box;
+      height: calc(#{$height} * 8);
+      .square {
+        width: $height;
         border: 2px solid $border-color;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
+        box-sizing: border-box;
       }
 
       .disk{
-        width: 95%;
-        height: 95%;
+        width: 100%;
+        height: 100%;
         border-radius: 50%;
         animation-name: fadeIn;
         animation-duration: 2s;
