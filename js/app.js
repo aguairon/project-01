@@ -31,10 +31,12 @@ function currentPlayer() {
 }
 
 function play(square) {
-  if(square.nodeName !== 'SPAN') {
-    // console.log(square, square.hasChildNodes())
+  if(square.nodeName === 'DIV' && !square.hasChildNodes()) {
+    // if (true) {
+    //
+    // }
+
     const player  = currentPlayer()
-    // take number of disks used from available disks
     black ? blackPlayer.numberOfDisks -=  1 : redPlayer.numberOfDisks -= 1
 
     //change turns
@@ -85,6 +87,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   gameBoard = document.querySelector('.game-board')
 
   createBoard()
+
 
   gameBoard.addEventListener('click', (e) =>  play(e.target))
 })
