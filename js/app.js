@@ -40,25 +40,58 @@ function addDisk(square) {
   setScore()
 }
 
+function left(id) {
+  id = parseInt(id)
+  if (id % 8 !== 0) return id - 1
+}
+
+function right(id) {
+  id = parseInt(id)
+  if (id % 8 !== 7) return id + 1
+}
+
+function up(id) {
+  id = parseInt(id)
+  if (id > 7) return id - 8
+}
+
+function down(id) {
+  id = parseInt(id)
+  if (id < 56) return id + 8
+}
+
+function colorOfSquare(square) {
+  const disk = square.querySelector('div')
+  if (disk) {
+    return disk.classList[1]
+  }
+}
+
+function isAdjacentDiskOpposite(square) {
+  return (
+    isAdjacentDiskOppositeInDirection(square, right) ||
+    isAdjacentDiskOppositeInDirection(square, left) ||
+    isAdjacentDiskOppositeInDirection(square, up) ||
+    isAdjacentDiskOppositeInDirection(square, down)
+  )
+}
+
+function isAdjacentDiskOppositeInDirection(square, direction) {
+  const adjacent = document.getElementById(direction(square.id))
+  const adjacentColor = colorOfSquare(adjacent)
+  return !!adjacentColor && adjacentColor !== currentPlayer().color
+}
+
+function isAnyDiskToTheRightTheSame(square) {
+
+}
+
 function play(square) {
   if(square.classList[0] === 'square') {
-    const directions = [-1, + 1, -8, +8]
+    console.log(isAdjacentDiskOpposite(square))
 
-    directions.forEach(direction => {
-      if(document.getElementById(parseInt(square.id) + direction)) {
-        if (document.getElementById(parseInt(square.id) + direction).querySelector('div')) {
-          if(document.getElementById(parseInt(square.id) + direction).querySelector('div').classList[1] !== currentPlayer().color){
-            //check other tiles in same direction
-            console.log(document.getElementById(parseInt(square.id) + direction).querySelector('div'))
-            addDisk(square)
-          } else {
-            console.log('nay')
-          }
-        } else {
-          return
-        }
-      }
-    })
+
+
   }
 }
 
