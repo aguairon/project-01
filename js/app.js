@@ -143,7 +143,7 @@ function validMove(square) {
 }
 
 function isSquareEmpty(square) {
-  return square.classList[0] === 'square'
+  return square.classList[0] === 'square' && !square.hasChildNodes()
 }
 
 function play(square) {

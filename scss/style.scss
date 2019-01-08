@@ -7,6 +7,10 @@ $border-color: #4b4b4b;
 $height: 70px;
 
 body {
+  font-family: 'Oswald', sans-serif;
+  color: $border-color;
+  font-weight: 400;
+  font-size: 18px;
   header {
     img {
       height: 100px;
