@@ -2,8 +2,8 @@ let gameBoard
 let redScore
 let blackScore
 let blacksTurn = true
-let directions = []
-let succesfulDirection
+// let directions = []
+// let succesfulDirection
 
 const redPlayer = {
   color: 'red',
@@ -86,7 +86,8 @@ function colorOfSquare(square) {
   }
 }
 
-function isAdjacentDiskOpposite(square) {
+function oppositeAdjacentDiskDirections(square) {
+  const directions = []
   if (isAdjacentDiskOppositeInDirection(square, right)) {
     directions.push(right)
   }
@@ -109,37 +110,47 @@ function isAdjacentDiskOppositeInDirection(square, direction) {
 }
 
 function isAnyFollowingDisksInDirectionTheSame(square, direction) {
-  let nextSqId = direction(square.id)
-  const followingSqId = direction(nextSqId)
-  const followingSquare = document.getElementById(followingSqId)
-  const followingColor = colorOfSquare(followingSquare)
+  let squareId = direction(square.id)
 
-  while(followingColor !== currentPlayer().color) {
-    nextSqId = followingSqId
-    console.log('not' , direction)
-    return false
+  while (squareId) {
+    console.log(squareId)
+    if (colorOfSquare(document.getElementById(squareId)) === currentPlayer().color) {
+      return true
+    }
+    squareId = direction(squareId)
   }
-  succesfulDirection = direction
-  console.log('suc', succesfulDirection)
-  return true
+
+  return false
 }
 
 function reassignDisks(square) {
-  const adjacent = document.getElementById(succesfulDirection(square.id)).querySelector('div')
-  adjacent.classList.remove(previousPlayer().color)
-  adjacent.classList.add(currentPlayer().color)
-  reduceCurrentPlayerAvailableDisks()
-  incrementPreviousPlayerAvailableDisks()
+  const directions = [right, left, up, down]
+  directions.forEach(direction => {
+    if (isAnyFollowingDisksInDirectionTheSame(square, direction)) {
+      let squareId = direction(square.id)
+
+      while (squareId) {
+        if (colorOfSquare(document.getElementById(squareId)) !== currentPlayer().color) {
+          const disk = document.getElementById(squareId).querySelector('div')
+          if (disk) {
+            disk.classList.remove(previousPlayer().color)
+            disk.classList.add(currentPlayer().color)
+            reduceCurrentPlayerAvailableDisks()
+            incrementPreviousPlayerAvailableDisks()
+          }
+        }
+        squareId = direction(squareId)
+      }
+    }
+  })
 }
 
 
 function validMove(square) {
-  const directions = isAdjacentDiskOpposite(square)
-  if (directions.length > 0) {
-    return directions.map(direction => {
-      isAnyFollowingDisksInDirectionTheSame(square, direction)
-    })
-  }
+  const directions = oppositeAdjacentDiskDirections(square)
+  return directions.some(direction => {
+    return isAnyFollowingDisksInDirectionTheSame(square, direction)
+  })
 }
 
 function isSquareEmpty(square) {
@@ -149,11 +160,11 @@ function isSquareEmpty(square) {
 function play(square) {
   if(isSquareEmpty(square)) {
     if (validMove(square)) {
+      console.log(square)
       addDisk(square)
       reassignDisks(square)
       setScore()
       changePlayersTurn()
-      directions = []
     }
   }
 }
