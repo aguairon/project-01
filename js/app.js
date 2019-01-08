@@ -29,6 +29,10 @@ function currentPlayer() {
   return blacksTurn ? blackPlayer : redPlayer
 }
 
+function previousPlayer() {
+  return blacksTurn ?  redPlayer : blackPlayer
+}
+
 function reduceAvailableDisks() {
   currentPlayer().numberOfDisks -= 1
 }
@@ -114,8 +118,8 @@ function isAnyFollowingDisksInDirectionTheSame(square, direction) {
 
 function reassignDisks(square) {
   const adjacent = document.getElementById(left(square.id)).querySelector('div')
-  adjacent.classList.remove('red')
-  adjacent.classList.add('black')
+  adjacent.classList.remove(currentPlayer().color)
+  adjacent.classList.add(previousPlayer().color)
   console.log(currentPlayer().color)
 }
 
