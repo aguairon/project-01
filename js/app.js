@@ -139,14 +139,12 @@ function oppositeAdjacentDiskDirections(square) {
 }
 
 function isAdjacentDiskOppositeInDirection(square, direction) {
-  console.log(direction(square.id))
   const adjacent = document.getElementById(direction(square.id))
   const adjacentColor = colorOfSquare(adjacent)
   return !!adjacentColor && adjacentColor !== currentPlayer().color
 }
 
 function isAnyFollowingDisksInDirectionTheSame(square, direction) {
-  // console.log('fol', direction)
   let squareId = direction(square.id)
 
   while (squareId) {
@@ -160,7 +158,7 @@ function isAnyFollowingDisksInDirectionTheSame(square, direction) {
 }
 
 function reassignDisks(square) {
-  const directions = [right, left, up, down]
+  const directions = [right, left, up, down, rightdown, rightup, leftdown, leftup]
   directions.forEach(direction => {
     if (isAnyFollowingDisksInDirectionTheSame(square, direction)) {
       let squareId = direction(square.id)
@@ -174,6 +172,8 @@ function reassignDisks(square) {
             reduceCurrentPlayerAvailableDisks()
             incrementPreviousPlayerAvailableDisks()
           }
+        } else {
+          return
         }
         squareId = direction(squareId)
       }
@@ -185,7 +185,6 @@ function reassignDisks(square) {
 function validMove(square) {
   const directions = oppositeAdjacentDiskDirections(square)
   return directions.some(direction => {
-    console.log(direction)
     return isAnyFollowingDisksInDirectionTheSame(square, direction)
   })
 }
