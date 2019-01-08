@@ -105,23 +105,21 @@ function isAnyFollowingDisksInDirectionTheSame(square, direction) {
   const followingSquare = document.getElementById(followingSqId)
   const followingColor = colorOfSquare(followingSquare)
 
-  console.log('color', followingColor, currentPlayer().color)
-  console.log(followingSquare)
-
   while(followingColor !== currentPlayer().color) {
     nextSqId = followingSqId
-    console.log('ya')
     return false
   }
   return true
-
 }
 
 
 function validMove(square) {
   const directions = isAdjacentDiskOpposite(square)
   if (directions.length > 0) {
+
     return directions.map(direction => {
+      console.log('sq', square)
+      console.log('dir', direction)
       isAnyFollowingDisksInDirectionTheSame(square, direction)
     })
   }
@@ -133,10 +131,7 @@ function isSquareEmpty(square) {
 
 function play(square) {
   if(isSquareEmpty(square)) {
-    // console.log('opp', directions)
-    // console.log('foll', isAnyFollowingDisksInDirectionTheSame(square))
     if (validMove(square)) {
-      console.log('yay')
       playDisk(square)
     }
   }
