@@ -33,9 +33,12 @@ function previousPlayer() {
   return blacksTurn ?  redPlayer : blackPlayer
 }
 
-function reduceAvailableDisks() {
-  console.log(currentPlayer().numberOfDisks)
+function reduceCurrentPlayerAvailableDisks() {
   currentPlayer().numberOfDisks -= 1
+}
+
+function incrementPreviousPlayerAvailableDisks() {
+  previousPlayer().numberOfDisks += 1
 }
 
 function changePlayersTurn() {
@@ -121,6 +124,8 @@ function reassignDisks(square) {
   const adjacent = document.getElementById(left(square.id)).querySelector('div')
   adjacent.classList.remove(previousPlayer().color)
   adjacent.classList.add(currentPlayer().color)
+  reduceCurrentPlayerAvailableDisks()
+  incrementPreviousPlayerAvailableDisks()
 }
 
 
@@ -141,9 +146,8 @@ function play(square) {
   if(isSquareEmpty(square)) {
     if (validMove(square)) {
       addDisk(square)
-      reduceAvailableDisks()
-      setScore()
       reassignDisks(square)
+      setScore()
       changePlayersTurn()
       directions = []
     }
