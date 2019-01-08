@@ -46,6 +46,7 @@ body {
         border-radius: 50%;
         animation-name: fadeIn;
         animation-duration: 2s;
+        transition: background-color 2000ms linear;
       } .red {
         background-color: crimson;
       } .black {
