@@ -71,9 +71,8 @@ function down(id) {
 }
 
 function colorOfSquare(square) {
-  const disk = square.querySelector('div')
-  if (disk) {
-    return disk.classList[1]
+  if (square && square.querySelector('div') ) {
+    return square.querySelector('div').classList[1]
   }
 }
 
@@ -91,6 +90,7 @@ function isAdjacentDiskOpposite(square) {
 
 function isAdjacentDiskOppositeInDirection(square, direction) {
   const adjacent = document.getElementById(direction(square.id))
+  console.log(adjacent)
   const adjacentColor = colorOfSquare(adjacent)
   return !!adjacentColor && adjacentColor !== currentPlayer().color
 }
@@ -117,7 +117,8 @@ function isSquareEmpty(square) {
 
 function play(square) {
   if(isSquareEmpty(square)) {
-    if (isAdjacentDiskOpposite(square) && isAnyDiskToTheRightTheSame(square)) playDisk(square)
+    if (isAdjacentDiskOpposite(square)
+    && isAnyDiskToTheRightTheSame(square)) playDisk(square)
   }
 }
 
