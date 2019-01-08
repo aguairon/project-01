@@ -6,7 +6,7 @@ let directions = []
 
 const redPlayer = {
   color: 'red',
-  numberOfDisks: 32,
+  numberOfDisks: 30,
   calculateScore: function() {
     return 32 - parseInt(this.numberOfDisks)
   }
@@ -14,7 +14,7 @@ const redPlayer = {
 
 const blackPlayer = {
   color: 'black',
-  numberOfDisks: 32,
+  numberOfDisks: 30,
   calculateScore: function() {
     return 32 - parseInt(this.numberOfDisks)
   }
@@ -34,6 +34,7 @@ function previousPlayer() {
 }
 
 function reduceAvailableDisks() {
+  console.log(currentPlayer().numberOfDisks)
   currentPlayer().numberOfDisks -= 1
 }
 
@@ -48,11 +49,11 @@ function addDisk(square) {
   square.append(disk)
 }
 
-function playDisk(square) {
-  addDisk(square)
-  reduceAvailableDisks()
-  changePlayersTurn()
-  setScore()
+function addInitialDisks(square, color) {
+  const disk = document.createElement('div')
+  disk.classList.add('disk')
+  disk.classList.add(color)
+  square.append(disk)
 }
 
 function left(id) {
@@ -118,9 +119,8 @@ function isAnyFollowingDisksInDirectionTheSame(square, direction) {
 
 function reassignDisks(square) {
   const adjacent = document.getElementById(left(square.id)).querySelector('div')
-  adjacent.classList.remove(currentPlayer().color)
-  adjacent.classList.add(previousPlayer().color)
-  console.log(currentPlayer().color)
+  adjacent.classList.remove(previousPlayer().color)
+  adjacent.classList.add(currentPlayer().color)
 }
 
 
@@ -140,8 +140,11 @@ function isSquareEmpty(square) {
 function play(square) {
   if(isSquareEmpty(square)) {
     if (validMove(square)) {
-      playDisk(square)
+      addDisk(square)
+      reduceAvailableDisks()
+      setScore()
       reassignDisks(square)
+      changePlayersTurn()
       directions = []
     }
   }
@@ -152,8 +155,9 @@ function findSquare(id) {
 }
 
 function playersInitialPositions() {
-  const initialPositions = [27, 28, 36, 35]
-  initialPositions.forEach(position => playDisk(findSquare(position)))
+  const initialPositions = {27: 'black', 28: 'red', 35: 'red', 36: 'black'}
+  const pos = Object.entries(initialPositions)
+  pos.forEach(position => addInitialDisks(findSquare(position[0]), position[1]))
 }
 
 function createBoard() {
@@ -165,6 +169,7 @@ function createBoard() {
   }
 
   playersInitialPositions()
+  setScore()
 }
 
 document.addEventListener('DOMContentLoaded', ()=>{
