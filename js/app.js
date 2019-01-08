@@ -2,6 +2,7 @@ let gameBoard
 let redScore
 let blackScore
 let blacksTurn = true
+let directions = []
 
 const redPlayer = {
   color: 'red',
@@ -77,7 +78,6 @@ function colorOfSquare(square) {
 }
 
 function isAdjacentDiskOpposite(square) {
-  const directions = []
   if (isAdjacentDiskOppositeInDirection(square, right)) {
     directions.push(right)
   }
@@ -112,6 +112,13 @@ function isAnyFollowingDisksInDirectionTheSame(square, direction) {
   return true
 }
 
+function reassignDisks(square) {
+  const adjacent = document.getElementById(left(square.id)).querySelector('div')
+  adjacent.classList.remove('red')
+  adjacent.classList.add('black')
+  console.log(currentPlayer().color)
+}
+
 
 function validMove(square) {
   const directions = isAdjacentDiskOpposite(square)
@@ -130,6 +137,8 @@ function play(square) {
   if(isSquareEmpty(square)) {
     if (validMove(square)) {
       playDisk(square)
+      reassignDisks(square)
+      directions = []
     }
   }
 }
@@ -161,4 +170,5 @@ document.addEventListener('DOMContentLoaded', ()=>{
   createBoard()
 
   gameBoard.addEventListener('click', (e) =>  play(e.target))
+
 })
