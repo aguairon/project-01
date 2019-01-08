@@ -116,10 +116,7 @@ function isAnyFollowingDisksInDirectionTheSame(square, direction) {
 function validMove(square) {
   const directions = isAdjacentDiskOpposite(square)
   if (directions.length > 0) {
-
     return directions.map(direction => {
-      console.log('sq', square)
-      console.log('dir', direction)
       isAnyFollowingDisksInDirectionTheSame(square, direction)
     })
   }
