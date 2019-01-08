@@ -3,6 +3,7 @@ let redScore
 let blackScore
 let blacksTurn = true
 let directions = []
+let succesfulDirection
 
 const redPlayer = {
   color: 'red',
@@ -115,13 +116,16 @@ function isAnyFollowingDisksInDirectionTheSame(square, direction) {
 
   while(followingColor !== currentPlayer().color) {
     nextSqId = followingSqId
+    console.log('not' , direction)
     return false
   }
+  succesfulDirection = direction
+  console.log('suc', succesfulDirection)
   return true
 }
 
 function reassignDisks(square) {
-  const adjacent = document.getElementById(left(square.id)).querySelector('div')
+  const adjacent = document.getElementById(succesfulDirection(square.id)).querySelector('div')
   adjacent.classList.remove(previousPlayer().color)
   adjacent.classList.add(currentPlayer().color)
   reduceCurrentPlayerAvailableDisks()
