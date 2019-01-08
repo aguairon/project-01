@@ -79,13 +79,13 @@ function colorOfSquare(square) {
 
 function isAdjacentDiskOpposite(square) {
   if (isAdjacentDiskOppositeInDirection(square, right)) {
-    return 'right'
+    return right
   } else if (isAdjacentDiskOppositeInDirection(square, left)) {
-    return 'left'
+    return left
   } else if (isAdjacentDiskOppositeInDirection(square, up)) {
-    return 'up'
+    return up
   } else if (isAdjacentDiskOppositeInDirection(square, down)) {
-    return 'down'
+    return down
   }
 }
 
@@ -97,8 +97,19 @@ function isAdjacentDiskOppositeInDirection(square, direction) {
 
 function isAnyDiskToTheRightTheSame(square) {
   const direction = isAdjacentDiskOpposite(square)
-  console.log(direction)
+
+  let currentSq = direction(square.id)
+  const followingSq = direction(currentSq)
+  const followingSquare = document.getElementById(followingSq)
+  const followingColor = colorOfSquare(followingSquare)
+
+  while(followingColor !== currentPlayer().color) {
+    currentSq = followingSq
+    return false
+  }
+  return true
 }
+
 
 function isSquareEmpty(square) {
   return square.classList[0] === 'square'
@@ -106,8 +117,7 @@ function isSquareEmpty(square) {
 
 function play(square) {
   if(isSquareEmpty(square)) {
-    isAnyDiskToTheRightTheSame(square) //todo
-    if (isAdjacentDiskOpposite(square)) playDisk(square)
+    if (isAdjacentDiskOpposite(square) && isAnyDiskToTheRightTheSame(square)) playDisk(square)
   }
 }
 
