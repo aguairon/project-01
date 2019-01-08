@@ -2,8 +2,6 @@ let gameBoard
 let redScore
 let blackScore
 let blacksTurn = true
-// let directions = []
-// let succesfulDirection
 
 const redPlayer = {
   color: 'red',
@@ -80,6 +78,26 @@ function down(id) {
   if (id < 56) return id + 8
 }
 
+function leftup(id) {
+  id = parseInt(id)
+  if (id % 8 !== 0 && id > 7) return id - 9
+}
+
+function leftdown(id) {
+  id = parseInt(id)
+  if (id % 8 !== 0 && id < 56) return id + 7
+}
+
+function rightup(id) {
+  id = parseInt(id)
+  if (id % 8 !== 7 && id > 7) return id - 7
+}
+
+function rightdown(id) {
+  id = parseInt(id)
+  if (id % 8 !== 7 && id < 56) return id + 9
+}
+
 function colorOfSquare(square) {
   if (square && square.querySelector('div') ) {
     return square.querySelector('div').classList[1]
@@ -100,20 +118,38 @@ function oppositeAdjacentDiskDirections(square) {
   if (isAdjacentDiskOppositeInDirection(square, down)) {
     directions.push(down)
   }
+
+  if (isAdjacentDiskOppositeInDirection(square, rightdown)) {
+    directions.push(rightdown)
+  }
+
+  if (isAdjacentDiskOppositeInDirection(square, rightup)) {
+    directions.push(rightup)
+  }
+
+  if (isAdjacentDiskOppositeInDirection(square, leftdown)) {
+    directions.push(leftdown)
+  }
+
+  if (isAdjacentDiskOppositeInDirection(square, leftup)) {
+    directions.push(leftup)
+  }
+
   return directions
 }
 
 function isAdjacentDiskOppositeInDirection(square, direction) {
+  console.log(direction(square.id))
   const adjacent = document.getElementById(direction(square.id))
   const adjacentColor = colorOfSquare(adjacent)
   return !!adjacentColor && adjacentColor !== currentPlayer().color
 }
 
 function isAnyFollowingDisksInDirectionTheSame(square, direction) {
+  // console.log('fol', direction)
   let squareId = direction(square.id)
 
   while (squareId) {
-    console.log(squareId)
     if (colorOfSquare(document.getElementById(squareId)) === currentPlayer().color) {
       return true
     }
@@ -149,6 +185,7 @@ function reassignDisks(square) {
 function validMove(square) {
   const directions = oppositeAdjacentDiskDirections(square)
   return directions.some(direction => {
+    console.log(direction)
     return isAnyFollowingDisksInDirectionTheSame(square, direction)
   })
 }
@@ -160,7 +197,6 @@ function isSquareEmpty(square) {
 function play(square) {
   if(isSquareEmpty(square)) {
     if (validMove(square)) {
-      console.log(square)
       addDisk(square)
       reassignDisks(square)
       setScore()
