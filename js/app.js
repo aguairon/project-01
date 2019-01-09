@@ -1,6 +1,7 @@
 let gameBoard
 let redScore
 let blackScore
+let replayButton
 
 const redPlayer = {
   name: 'Desdemona',
@@ -272,8 +273,16 @@ document.addEventListener('DOMContentLoaded', ()=>{
   gameBoard = document.querySelector('.game-board')
   redScore = document.querySelector('.red span')
   blackScore = document.querySelector('.black span')
+  replayButton = document.querySelector('.button')
   createBoard()
 
   gameBoard.addEventListener('click', (e) =>  play(e.target))
+
+  replayButton.addEventListener('click', () => {
+    while (gameBoard.firstChild) {
+      gameBoard.removeChild(gameBoard.firstChild)
+    }
+    createBoard()
+  })
 
 })
