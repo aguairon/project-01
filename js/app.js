@@ -8,7 +8,7 @@ let scoreSection
 const redPlayer = {
   name: 'Desdemona',
   color: 'red',
-  initialNumberOfDisks: 5,
+  initialNumberOfDisks: 32,
   calculateCurrentNumberOfDisks: function() {
     return this.initialNumberOfDisks - board.calculateScore(this.color)
   }
@@ -17,7 +17,7 @@ const redPlayer = {
 const blackPlayer = {
   name: 'Othello',
   color: 'black',
-  initialNumberOfDisks: 5,
+  initialNumberOfDisks: 32,
   calculateCurrentNumberOfDisks: function() {
     return parseInt(this.initialNumberOfDisks) - board.calculateScore(this.color)
   }
@@ -164,7 +164,7 @@ function isAnyFollowingDisksInDirectionTheSame(square, direction) {
 
 function removePreviousPlayerDisks(disk) {
   let classToRemove
-  board.currentPlayer.color === 'black' ? classToRemove = 'red' : 'black'
+  board.currentPlayer.color === 'black' ? classToRemove = 'red' : classToRemove = 'black'
   disk.classList.remove(classToRemove)
 }
 
