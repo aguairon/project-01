@@ -2,6 +2,8 @@ let gameBoard
 let redScore
 let blackScore
 let replayButton
+let banner
+let scoreSection
 
 const redPlayer = {
   name: 'Desdemona',
@@ -204,9 +206,7 @@ function isSquareEmpty(square) {
 }
 
 function showWinnerBanner() {
-  document.querySelector('.score').classList.remove('active')
-  const banner = document.querySelector('.winner')
-  console.log(board.winner.name)
+  scoreSection.classList.remove('active')
   banner.innerText = board.winner.name + ' wins'
   banner.classList.add('active')
 }
@@ -274,15 +274,23 @@ document.addEventListener('DOMContentLoaded', ()=>{
   redScore = document.querySelector('.red span')
   blackScore = document.querySelector('.black span')
   replayButton = document.querySelector('.button')
+  banner = document.querySelector('.winner')
+  scoreSection = document.querySelector('.score')
   createBoard()
 
   gameBoard.addEventListener('click', (e) =>  play(e.target))
 
   replayButton.addEventListener('click', () => {
+    banner.classList.remove('active')
+    scoreSection.classList.add('active')
+    board.winner = null
+    board.currentPlayer = blackPlayer
+  
     while (gameBoard.firstChild) {
       gameBoard.removeChild(gameBoard.firstChild)
     }
     createBoard()
+
   })
 
 })
