@@ -5,20 +5,19 @@ let blacksTurn = true
 
 const redPlayer = {
   color: 'red',
-  initialNumberOfDisks: 32,
+  initialNumberOfDisks: 5,
   calculateCurrentNumberOfDisks: function() {
     const redDisks = document.querySelectorAll('.disk.red')
     return this.initialNumberOfDisks - redDisks.length
   },
   calculateScore: function() {
-    console.log(this.initialNumberOfDisks - this.calculateCurrentNumberOfDisks())
     return this.initialNumberOfDisks - this.calculateCurrentNumberOfDisks()
   }
 }
 
 const blackPlayer = {
   color: 'black',
-  initialNumberOfDisks: 32,
+  initialNumberOfDisks: 5,
   calculateCurrentNumberOfDisks: function() {
     const blackDisks = document.querySelectorAll('.disk.black')
     return parseInt(this.initialNumberOfDisks) - blackDisks.length
@@ -201,13 +200,17 @@ function isSquareEmpty(square) {
 }
 
 function play(square) {
-  if(isSquareEmpty(square)) {
-    if (validMove(square)) {
-      addDisk(square)
-      reassignDisks(square)
-      setScore()
-      changePlayersTurn()
+  if (currentPlayer().calculateCurrentNumberOfDisks() > 0 && previousPlayer().calculateCurrentNumberOfDisks() > 0) {
+    if(isSquareEmpty(square)) {
+      if (validMove(square)) {
+        addDisk(square)
+        reassignDisks(square)
+        setScore()
+        changePlayersTurn()
+      }
     }
+  }  else {
+    console.log('win')
   }
 }
 
