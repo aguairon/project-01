@@ -179,7 +179,10 @@ function reassignDisks(square) {
       let squareId = direction(square.id)
 
       while (squareId) {
-        if (colorOfSquare(document.getElementById(squareId)) !== board.currentPlayer.color) {
+        if (colorOfSquare(document.getElementById(squareId)) &&
+        colorOfSquare(document.getElementById(direction(squareId)))&&
+        colorOfSquare(document.getElementById(squareId)) !== board.currentPlayer.color ) {
+          console.log(colorOfSquare(document.getElementById(squareId)))
           const disk = document.getElementById(squareId).querySelector('div')
           if (disk) {
             removePreviousPlayerDisks(disk)
@@ -230,6 +233,7 @@ function play(square) {
     }
   }
 }
+
 
 function findSquare(id) {
   return document.getElementById(id)
