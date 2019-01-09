@@ -34,6 +34,7 @@ const board = {
     }
   },
   calculateScore: function(color) {
+    // console.log(document.querySelectorAll(`.disk.${color}`))
     return document.querySelectorAll(`.disk.${color}`).length
   },
   isThereAWinner: function() {
@@ -163,7 +164,7 @@ function isAnyFollowingDisksInDirectionTheSame(square, direction) {
 
 function removePreviousPlayerDisks(disk) {
   let classToRemove
-  board.currentPlayer.color === 'black' ? classToRemove = '.red' : '.black'
+  board.currentPlayer.color === 'black' ? classToRemove = 'red' : 'black'
   disk.classList.remove(classToRemove)
 }
 
@@ -285,7 +286,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     scoreSection.classList.add('active')
     board.winner = null
     board.currentPlayer = blackPlayer
-  
+
     while (gameBoard.firstChild) {
       gameBoard.removeChild(gameBoard.firstChild)
     }
