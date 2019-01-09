@@ -276,6 +276,14 @@ function resetBoard() {
   board.currentPlayer = blackPlayer
 }
 
+function resetGame() {
+  resetBoard()
+
+  while (gameBoard.firstChild) {
+    gameBoard.removeChild(gameBoard.firstChild)
+  }
+  createBoard()
+}
 
 document.addEventListener('DOMContentLoaded', ()=>{
   gameBoard = document.querySelector('.game-board')
@@ -289,13 +297,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
   gameBoard.addEventListener('click', (e) =>  play(e.target))
 
-  replayButton.addEventListener('click', () => {
-    resetBoard()
-
-    while (gameBoard.firstChild) {
-      gameBoard.removeChild(gameBoard.firstChild)
-    }
-    createBoard()
-  })
+  replayButton.addEventListener('click', () => resetGame())
 
 })
