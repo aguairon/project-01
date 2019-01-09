@@ -4,7 +4,7 @@
 }
 
 $border-color: #4b4b4b;
-$height: 70px;
+$height: 60px;
 
 body {
   font-family: 'Oswald', sans-serif;
@@ -13,7 +13,8 @@ body {
   font-size: 18px;
   header {
     img {
-      height: 100px;
+      display: block;
+      height: $height;
     }
   }
 
@@ -23,8 +24,16 @@ body {
     .score {
       display: flex;
       justify-content: space-between;
-      div {
+      .turn {
         padding: 10px;
+        display: flex;
+        img {
+          height: 30px;
+          visibility: hidden;
+        }
+        img.active {
+          visibility: visible;
+        }
       }
     }
 

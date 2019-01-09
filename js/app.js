@@ -208,11 +208,12 @@ function play(square) {
         reassignDisks(square)
         setScore()
         board.isThereAWinner()
-        board.changePlayersTurn()
+        if(!board.winner) {
+          board.changePlayersTurn()
+          showCurrentTurn()
+        }
       }
     }
-  }  else {
-    console.log('win')
   }
 }
 
@@ -236,12 +237,28 @@ function createBoard() {
 
   playersInitialPositions()
   setScore()
+  showCurrentTurn()
 }
+
+function showCurrentTurn() {
+  let color
+  let otherColor
+  if (board.currentPlayer.color === 'black') {
+    color = 'black'
+    otherColor = 'red'
+  } else {
+    color = 'red'
+    otherColor = 'black'
+  }
+  document.querySelector('.' + otherColor).querySelector('img').classList.remove('active')
+  document.querySelector('.' + color).querySelector('img').classList.add('active')
+}
+
 
 document.addEventListener('DOMContentLoaded', ()=>{
   gameBoard = document.querySelector('.game-board')
-  redScore = document.querySelector('.red')
-  blackScore = document.querySelector('.black')
+  redScore = document.querySelector('.red span')
+  blackScore = document.querySelector('.black span')
   createBoard()
 
   gameBoard.addEventListener('click', (e) =>  play(e.target))
