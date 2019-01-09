@@ -20,6 +20,7 @@ const blackPlayer = {
 
 const board = {
   currentPlayer: blackPlayer,
+  winner: null,
   changePlayersTurn: function() {
     if (this.currentPlayer === blackPlayer) {
       this.currentPlayer = redPlayer
@@ -30,7 +31,11 @@ const board = {
   calculateScore: function(color) {
     return document.querySelectorAll(`.disk.${color}`).length
   },
-  winner: false
+  isThereAWinner: function() {
+    if(this.currentPlayer.calculateCurrentNumberOfDisks() <= 0) {
+      this.winner = this.currentPlayer
+    }
+  }
 }
 
 function setScore() {
@@ -196,12 +201,13 @@ function isSquareEmpty(square) {
 }
 
 function play(square) {
-  if (redPlayer.calculateCurrentNumberOfDisks() > 0 && blackPlayer.calculateCurrentNumberOfDisks() > 0) {
+  if (!board.winner) {
     if(isSquareEmpty(square)) {
       if (validMove(square)) {
         addDisk(square)
         reassignDisks(square)
         setScore()
+        board.isThereAWinner()
         board.changePlayersTurn()
       }
     }
