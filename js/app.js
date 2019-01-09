@@ -242,6 +242,8 @@ function playersInitialPositions() {
 }
 
 function createBoard() {
+  banner.classList.remove('active')
+  scoreSection.classList.add('active')
   for(let i = 0; i < 64; i++) {
     const square = document.createElement('div')
     square.classList.add('square')
@@ -269,6 +271,11 @@ function showCurrentTurn() {
   document.querySelector('.' + color).querySelector('img').classList.add('active')
 }
 
+function resetBoard() {
+  board.winner = null
+  board.currentPlayer = blackPlayer
+}
+
 
 document.addEventListener('DOMContentLoaded', ()=>{
   gameBoard = document.querySelector('.game-board')
@@ -277,21 +284,18 @@ document.addEventListener('DOMContentLoaded', ()=>{
   replayButton = document.querySelector('.button')
   banner = document.querySelector('.winner')
   scoreSection = document.querySelector('.score')
+
   createBoard()
 
   gameBoard.addEventListener('click', (e) =>  play(e.target))
 
   replayButton.addEventListener('click', () => {
-    banner.classList.remove('active')
-    scoreSection.classList.add('active')
-    board.winner = null
-    board.currentPlayer = blackPlayer
+    resetBoard()
 
     while (gameBoard.firstChild) {
       gameBoard.removeChild(gameBoard.firstChild)
     }
     createBoard()
-
   })
 
 })
