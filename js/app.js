@@ -38,12 +38,10 @@ function setScore() {
   blackScore.innerText= board.calculateScore('black')
 }
 
-
-function previousPlayer() {
-  return board.blacksTurn ?  redPlayer : blackPlayer
-}
-
-
+//
+// function previousPlayer() {
+//   return board.blacksTurn ?  redPlayer : blackPlayer
+// }
 
 function addDisk(square) {
   const disk = document.createElement('div')
@@ -159,7 +157,9 @@ function isAnyFollowingDisksInDirectionTheSame(square, direction) {
 }
 
 function removePreviousPlayerDisks(disk) {
-  disk.classList.remove(previousPlayer().color)
+  let classToRemove
+  board.currentPlayer.color === 'black' ? classToRemove = '.red' : '.black'
+  disk.classList.remove(classToRemove)
 }
 
 function convertCurrentPlayerDisks(disk) {
@@ -201,7 +201,7 @@ function isSquareEmpty(square) {
 }
 
 function play(square) {
-  if (board.currentPlayer.calculateCurrentNumberOfDisks() > 0 && previousPlayer().calculateCurrentNumberOfDisks() > 0) {
+  if (redPlayer.calculateCurrentNumberOfDisks() > 0 && blackPlayer.calculateCurrentNumberOfDisks() > 0) {
     if(isSquareEmpty(square)) {
       if (validMove(square)) {
         addDisk(square)
