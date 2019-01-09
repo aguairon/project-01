@@ -5,17 +5,26 @@ let blacksTurn = true
 
 const redPlayer = {
   color: 'red',
-  numberOfDisks: 30,
+  initialNumberOfDisks: 32,
+  calculateCurrentNumberOfDisks: function() {
+    const redDisks = document.querySelectorAll('.disk.red')
+    return this.initialNumberOfDisks - redDisks.length
+  },
   calculateScore: function() {
-    return 32 - parseInt(this.numberOfDisks)
+    console.log(this.initialNumberOfDisks - this.calculateCurrentNumberOfDisks())
+    return this.initialNumberOfDisks - this.calculateCurrentNumberOfDisks()
   }
 }
 
 const blackPlayer = {
   color: 'black',
-  numberOfDisks: 30,
+  initialNumberOfDisks: 32,
+  calculateCurrentNumberOfDisks: function() {
+    const blackDisks = document.querySelectorAll('.disk.black')
+    return parseInt(this.initialNumberOfDisks) - blackDisks.length
+  },
   calculateScore: function() {
-    return 32 - parseInt(this.numberOfDisks)
+    return this.initialNumberOfDisks - this.calculateCurrentNumberOfDisks()
   }
 }
 
@@ -30,14 +39,6 @@ function currentPlayer() {
 
 function previousPlayer() {
   return blacksTurn ?  redPlayer : blackPlayer
-}
-
-function reduceCurrentPlayerAvailableDisks() {
-  currentPlayer().numberOfDisks -= 1
-}
-
-function incrementPreviousPlayerAvailableDisks() {
-  previousPlayer().numberOfDisks += 1
 }
 
 function changePlayersTurn() {
@@ -157,6 +158,14 @@ function isAnyFollowingDisksInDirectionTheSame(square, direction) {
   return false
 }
 
+function removePreviousPlayerDisks(disk) {
+  disk.classList.remove(previousPlayer().color)
+}
+
+function  convertCurrentPlayerDisks(disk) {
+  disk.classList.add(currentPlayer().color)
+}
+
 function reassignDisks(square) {
   const directions = [right, left, up, down, rightdown, rightup, leftdown, leftup]
   directions.forEach(direction => {
@@ -167,10 +176,8 @@ function reassignDisks(square) {
         if (colorOfSquare(document.getElementById(squareId)) !== currentPlayer().color) {
           const disk = document.getElementById(squareId).querySelector('div')
           if (disk) {
-            disk.classList.remove(previousPlayer().color)
-            disk.classList.add(currentPlayer().color)
-            reduceCurrentPlayerAvailableDisks()
-            incrementPreviousPlayerAvailableDisks()
+            removePreviousPlayerDisks(disk)
+            convertCurrentPlayerDisks(disk)
           }
         } else {
           return
