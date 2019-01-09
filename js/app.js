@@ -38,11 +38,6 @@ function setScore() {
   blackScore.innerText= board.calculateScore('black')
 }
 
-//
-// function previousPlayer() {
-//   return board.blacksTurn ?  redPlayer : blackPlayer
-// }
-
 function addDisk(square) {
   const disk = document.createElement('div')
   disk.classList.add('disk')
