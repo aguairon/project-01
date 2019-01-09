@@ -2,22 +2,11 @@ let gameBoard
 let redScore
 let blackScore
 
-const board = {
-  blacksTurn: true,
-  calculateRedScore: function() {
-    return document.querySelectorAll('.disk.red').length
-  },
-  calculateBlackScore: function() {
-    return document.querySelectorAll('.disk.black').length
-  },
-  winner: false
-}
-
 const redPlayer = {
   color: 'red',
   initialNumberOfDisks: 5,
   calculateCurrentNumberOfDisks: function() {
-    return this.initialNumberOfDisks - board.calculateRedScore()
+    return this.initialNumberOfDisks - board.calculateScore(this.color)
   }
 }
 
@@ -25,31 +14,41 @@ const blackPlayer = {
   color: 'black',
   initialNumberOfDisks: 5,
   calculateCurrentNumberOfDisks: function() {
-    return parseInt(this.initialNumberOfDisks) - board.calculateBlackScore()
+    return parseInt(this.initialNumberOfDisks) - board.calculateScore(this.color)
   }
 }
 
-function setScore() {
-  redScore.innerText= board.calculateRedScore()
-  blackScore.innerText= board.calculateBlackScore()
+const board = {
+  currentPlayer: blackPlayer,
+  changePlayersTurn: function() {
+    if (this.currentPlayer === blackPlayer) {
+      this.currentPlayer = redPlayer
+    } else {
+      this.currentPlayer = blackPlayer
+    }
+  },
+  calculateScore: function(color) {
+    return document.querySelectorAll(`.disk.${color}`).length
+  },
+  winner: false
 }
 
-function currentPlayer() {
-  return board.blacksTurn ? blackPlayer : redPlayer
+function setScore() {
+  redScore.innerText= board.calculateScore('red')
+  blackScore.innerText= board.calculateScore('black')
 }
+
 
 function previousPlayer() {
   return board.blacksTurn ?  redPlayer : blackPlayer
 }
 
-function changePlayersTurn() {
-  board.blacksTurn = !board.blacksTurn
-}
+
 
 function addDisk(square) {
   const disk = document.createElement('div')
   disk.classList.add('disk')
-  disk.classList.add(currentPlayer().color)
+  disk.classList.add(board.currentPlayer.color)
   square.append(disk)
 }
 
@@ -143,14 +142,14 @@ function oppositeAdjacentDiskDirections(square) {
 function isAdjacentDiskOppositeInDirection(square, direction) {
   const adjacent = document.getElementById(direction(square.id))
   const adjacentColor = colorOfSquare(adjacent)
-  return !!adjacentColor && adjacentColor !== currentPlayer().color
+  return !!adjacentColor && adjacentColor !== board.currentPlayer.color
 }
 
 function isAnyFollowingDisksInDirectionTheSame(square, direction) {
   let squareId = direction(square.id)
 
   while (squareId) {
-    if (colorOfSquare(document.getElementById(squareId)) === currentPlayer().color) {
+    if (colorOfSquare(document.getElementById(squareId)) === board.currentPlayer.color) {
       return true
     }
     squareId = direction(squareId)
@@ -163,8 +162,8 @@ function removePreviousPlayerDisks(disk) {
   disk.classList.remove(previousPlayer().color)
 }
 
-function  convertCurrentPlayerDisks(disk) {
-  disk.classList.add(currentPlayer().color)
+function convertCurrentPlayerDisks(disk) {
+  disk.classList.add(board.currentPlayer.color)
 }
 
 function reassignDisks(square) {
@@ -174,7 +173,7 @@ function reassignDisks(square) {
       let squareId = direction(square.id)
 
       while (squareId) {
-        if (colorOfSquare(document.getElementById(squareId)) !== currentPlayer().color) {
+        if (colorOfSquare(document.getElementById(squareId)) !== board.currentPlayer.color) {
           const disk = document.getElementById(squareId).querySelector('div')
           if (disk) {
             removePreviousPlayerDisks(disk)
@@ -202,13 +201,13 @@ function isSquareEmpty(square) {
 }
 
 function play(square) {
-  if (currentPlayer().calculateCurrentNumberOfDisks() > 0 && previousPlayer().calculateCurrentNumberOfDisks() > 0) {
+  if (board.currentPlayer.calculateCurrentNumberOfDisks() > 0 && previousPlayer().calculateCurrentNumberOfDisks() > 0) {
     if(isSquareEmpty(square)) {
       if (validMove(square)) {
         addDisk(square)
         reassignDisks(square)
         setScore()
-        changePlayersTurn()
+        board.changePlayersTurn()
       }
     }
   }  else {
