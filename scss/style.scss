@@ -33,6 +33,8 @@ body {
         }
         img.active {
           visibility: visible;
+          animation-name: fadeIn;
+          animation-duration: 2s;
         }
       }
     }
