@@ -3,6 +3,7 @@ let redScore
 let blackScore
 
 const redPlayer = {
+  name: 'Desdemona',
   color: 'red',
   initialNumberOfDisks: 5,
   calculateCurrentNumberOfDisks: function() {
@@ -11,6 +12,7 @@ const redPlayer = {
 }
 
 const blackPlayer = {
+  name: 'Othello',
   color: 'black',
   initialNumberOfDisks: 5,
   calculateCurrentNumberOfDisks: function() {
@@ -200,6 +202,14 @@ function isSquareEmpty(square) {
   return square.classList[0] === 'square' && !square.hasChildNodes()
 }
 
+function showWinnerBanner() {
+  document.querySelector('.score').classList.remove('active')
+  const banner = document.querySelector('.winner')
+  console.log(board.winner.name)
+  banner.innerText = board.winner.name + ' wins'
+  banner.classList.add('active')
+}
+
 function play(square) {
   if (!board.winner) {
     if(isSquareEmpty(square)) {
@@ -211,6 +221,8 @@ function play(square) {
         if(!board.winner) {
           board.changePlayersTurn()
           showCurrentTurn()
+        } else {
+          showWinnerBanner()
         }
       }
     }
@@ -250,6 +262,7 @@ function showCurrentTurn() {
     color = 'red'
     otherColor = 'black'
   }
+
   document.querySelector('.' + otherColor).querySelector('img').classList.remove('active')
   document.querySelector('.' + color).querySelector('img').classList.add('active')
 }

@@ -10,7 +10,7 @@ body {
   font-family: 'Oswald', sans-serif;
   color: $border-color;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 22px;
   header {
     img {
       display: block;
@@ -21,11 +21,20 @@ body {
   main {
     width: calc((#{$height} * 8) + 6px);
     margin: 0 auto;
-    .score {
+    .winner {
+      padding: 20px;
+      text-align: center;
+      width: 100%;
+      display: none;
+    }
+    .winner.active {
+      display: block
+    }
+    .score.active {
       display: flex;
       justify-content: space-between;
-      .turn {
-        padding: 10px;
+      .turn{
+        padding: 20px;
         display: flex;
         img {
           height: 30px;
@@ -37,6 +46,9 @@ body {
           animation-duration: 2s;
         }
       }
+    }
+    .score {
+      display: none;
     }
 
     .game-board {
