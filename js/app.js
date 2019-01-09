@@ -1,17 +1,23 @@
 let gameBoard
 let redScore
 let blackScore
-let blacksTurn = true
+
+const board = {
+  blacksTurn: true,
+  calculateRedScore: function() {
+    return document.querySelectorAll('.disk.red').length
+  },
+  calculateBlackScore: function() {
+    return document.querySelectorAll('.disk.black').length
+  },
+  winner: false
+}
 
 const redPlayer = {
   color: 'red',
   initialNumberOfDisks: 5,
   calculateCurrentNumberOfDisks: function() {
-    const redDisks = document.querySelectorAll('.disk.red')
-    return this.initialNumberOfDisks - redDisks.length
-  },
-  calculateScore: function() {
-    return this.initialNumberOfDisks - this.calculateCurrentNumberOfDisks()
+    return this.initialNumberOfDisks - board.calculateRedScore()
   }
 }
 
@@ -19,29 +25,25 @@ const blackPlayer = {
   color: 'black',
   initialNumberOfDisks: 5,
   calculateCurrentNumberOfDisks: function() {
-    const blackDisks = document.querySelectorAll('.disk.black')
-    return parseInt(this.initialNumberOfDisks) - blackDisks.length
-  },
-  calculateScore: function() {
-    return this.initialNumberOfDisks - this.calculateCurrentNumberOfDisks()
+    return parseInt(this.initialNumberOfDisks) - board.calculateBlackScore()
   }
 }
 
 function setScore() {
-  redScore.innerText= redPlayer.calculateScore()
-  blackScore.innerText= blackPlayer.calculateScore()
+  redScore.innerText= board.calculateRedScore()
+  blackScore.innerText= board.calculateBlackScore()
 }
 
 function currentPlayer() {
-  return blacksTurn ? blackPlayer : redPlayer
+  return board.blacksTurn ? blackPlayer : redPlayer
 }
 
 function previousPlayer() {
-  return blacksTurn ?  redPlayer : blackPlayer
+  return board.blacksTurn ?  redPlayer : blackPlayer
 }
 
 function changePlayersTurn() {
-  blacksTurn = !blacksTurn
+  board.blacksTurn = !board.blacksTurn
 }
 
 function addDisk(square) {
