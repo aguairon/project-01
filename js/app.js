@@ -182,12 +182,11 @@ function reassignDisks(square) {
         if (colorOfSquare(document.getElementById(squareId)) &&
         colorOfSquare(document.getElementById(direction(squareId)))&&
         colorOfSquare(document.getElementById(squareId)) !== board.currentPlayer.color ) {
-          console.log(colorOfSquare(document.getElementById(squareId)))
           const disk = document.getElementById(squareId).querySelector('div')
-          if (disk) {
-            removePreviousPlayerDisks(disk)
-            convertCurrentPlayerDisks(disk)
-          }
+          // if (disk) {
+          removePreviousPlayerDisks(disk)
+          convertCurrentPlayerDisks(disk)
+          // }
         } else {
           return
         }
@@ -232,8 +231,63 @@ function play(square) {
       }
     }
   }
+  computerPlay()
 }
 
+
+function computerPlay() {
+  if (board.currentPlayer.color === 'red') {
+    const redDisks = document.querySelectorAll('.disk.red')
+    // const blackDisks = document.querySelectorAll('.disk.black')
+
+    console.log('reddisks', redDisks)
+    // console.log('blackdisks', blackDisks)
+
+    const validIds = []
+    redDisks.forEach(redDisk => {
+      const directions = oppositeAdjacentDiskDirections(redDisk.parentElement)
+      if(directions.length > 0) {
+        directions.forEach(direction => {
+          let squareId = direction(redDisk.parentElement.id)
+
+          while (document.getElementById(squareId) !== null &&
+          document.getElementById(squareId).querySelector('div') !== null) {
+            squareId = direction(squareId)
+          }
+          if (!!squareId && !validIds.includes(squareId)) {
+            validIds.push(squareId)
+          }
+        })
+      }
+    })
+
+
+    const square = findSquare(validIds[0])
+    console.log(square)
+
+
+    let timeRemaining = 3
+
+    const timerId = setInterval(() => {
+      timeRemaining--
+      // console.log(timeRemaining)
+      if(timeRemaining === 0) {
+        clearInterval(timerId)
+        if (!board.winner && board.currentPlayer.color === 'red') {
+          if(isSquareEmpty(square)) {
+            addDisk(square)
+            reassignDisks(square)
+            setScore()
+            board.changePlayersTurn()
+            showCurrentTurn()
+          } else {
+            showWinnerBanner()
+          }
+        }
+      }
+    }, 1000)
+  }
+}
 
 function findSquare(id) {
   return document.getElementById(id)
@@ -242,6 +296,7 @@ function findSquare(id) {
 function playersInitialPositions() {
   const initialPositions = {27: 'black', 28: 'red', 35: 'red', 36: 'black'}
   const pos = Object.entries(initialPositions)
+  // console.log(pos)
   pos.forEach(position => addInitialDisks(findSquare(position[0]), position[1]))
 }
 
