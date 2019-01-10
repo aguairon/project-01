@@ -181,7 +181,7 @@ function computerValidMoves() {
     if(directions.length > 0) {
       directions.forEach(direction => {
         let squareId = direction(redDisk.parentElement.id)
-
+          
         while (findSquare(squareId) &&
         findSquare(squareId).querySelector('div') &&
         colorOfSquare(findSquare(squareId)) !== board.currentPlayer.color) {
