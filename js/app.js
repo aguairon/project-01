@@ -5,9 +5,6 @@ let replayButton
 let banner
 let scoreSection
 
-const blackMoves = []
-const redMoves = []
-
 const redPlayer = {
   name: 'Desdemona',
   color: 'red',
@@ -27,6 +24,7 @@ const blackPlayer = {
 }
 
 const board = {
+  numberOfPlayers: 1,
   currentPlayer: blackPlayer,
   winner: null,
   changePlayersTurn: function() {
@@ -205,6 +203,30 @@ function validMove(square) {
   })
 }
 
+function computerValidMoves() {
+  const redDisks = document.querySelectorAll('.disk.red')
+
+  const validIds = []
+  redDisks.forEach(redDisk => {
+    const directions = oppositeAdjacentDiskDirections(redDisk.parentElement)
+    if(directions.length > 0) {
+      directions.forEach(direction => {
+        let squareId = direction(redDisk.parentElement.id)
+
+        while (findSquare(squareId) &&
+        findSquare(squareId).querySelector('div') &&
+        colorOfSquare(findSquare(squareId)) !== board.currentPlayer.color) {
+          squareId = direction(squareId)
+        }
+        if (!!squareId && !validIds.includes(squareId) && colorOfSquare(findSquare(squareId)) !== board.currentPlayer.color) {
+          validIds.push(squareId)
+        }
+      })
+    }
+  })
+  return validIds
+}
+
 function isSquareEmpty(square) {
   return square.classList[0] === 'square' && !square.hasChildNodes()
 }
@@ -219,77 +241,45 @@ function play(square) {
   if (!board.winner) {
     if(isSquareEmpty(square)) {
       if (validMove(square)) {
-        addDisk(square)
-        reassignDisks(square)
-        setScore()
-        board.isThereAWinner()
-        blackMoves.push(square)
-        if(!board.winner) {
-          board.changePlayersTurn()
-          showCurrentTurn()
-        } else {
-          showWinnerBanner()
-        }
+        updateGameBoard(square)
       }
     }
   }
-  computerPlay()
-  console.log('red', redMoves, 'black', blackMoves)
+
+  if (board.currentPlayer.color === 'red' && board.numberOfPlayers === 1) {
+    computerPlay()
+  }
 }
 
+function updateGameBoard(square) {
+  addDisk(square)
+  reassignDisks(square)
+  setScore()
+  if(!board.winner) {
+    board.changePlayersTurn()
+    showCurrentTurn()
+  } else {
+    showWinnerBanner()
+  }
+}
 
 function computerPlay() {
-  if (board.currentPlayer.color === 'red') {
-    const redDisks = document.querySelectorAll('.disk.red')
+  const validIds = computerValidMoves()
 
-    const validIds = []
-    redDisks.forEach(redDisk => {
-      const directions = oppositeAdjacentDiskDirections(redDisk.parentElement)
-      if(directions.length > 0) {
-        directions.forEach(direction => {
-          let squareId = direction(redDisk.parentElement.id)
+  const square = findSquare(validIds[0])
+  let timeRemaining = 3
 
-          while (findSquare(squareId) &&
-          findSquare(squareId).querySelector('div') &&
-          colorOfSquare(findSquare(squareId)) !== board.currentPlayer.color) {
-            squareId = direction(squareId)
-          }
-          if (!!squareId && !validIds.includes(squareId) && colorOfSquare(findSquare(squareId)) !== board.currentPlayer.color) {
-            validIds.push(squareId)
-          }
-        })
-      }
-    })
-
-    console.log(validIds)
-
-
-    const square = findSquare(validIds[0])
-    redMoves.push(square)
-
-    let timeRemaining = 3
-
-    const timerId = setInterval(() => {
-      timeRemaining--
-      // console.log(timeRemaining)
-      if(timeRemaining === 0) {
-        clearInterval(timerId)
-        if (!board.winner && board.currentPlayer.color === 'red') {
-          if(isSquareEmpty(square)) {
-            addDisk(square)
-            reassignDisks(square)
-            setScore()
-            if(!board.winner) {
-              board.changePlayersTurn()
-              showCurrentTurn()
-            } else {
-              showWinnerBanner()
-            }
-          }
+  const timerId = setInterval(() => {
+    timeRemaining--
+    if(timeRemaining === 0) {
+      clearInterval(timerId)
+      if (!board.winner && board.currentPlayer.color === 'red') {
+        if(isSquareEmpty(square)) {
+          updateGameBoard(square)
         }
       }
-    }, 1000)
-  }
+    }
+  }, 1000)
 }
 
 function findSquare(id) {
