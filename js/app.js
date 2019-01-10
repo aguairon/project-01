@@ -238,20 +238,6 @@ function showWinnerBanner() {
   banner.classList.add('active')
 }
 
-function play(square) {
-  if (!board.winner) {
-    if(isSquareEmpty(square)) {
-      if (validMove(square)) {
-        updateGameBoard(square)
-      }
-    }
-  }
-
-  if (board.currentPlayer.color === 'red' && board.numberOfPlayers === 1) {
-    computerPlay()
-  }
-}
-
 function updateGameBoard(square) {
   addDisk(square)
   reassignDisks(square)
@@ -264,9 +250,22 @@ function updateGameBoard(square) {
   }
 }
 
-function computerPlay() {
-  const validIds = computerValidMoves()
+function play(square) {
+  if (!board.winner) {
+    if(isSquareEmpty(square)) {
+      if (validMove(square)) {
+        updateGameBoard(square)
+      }
 
+      if (board.currentPlayer.color === 'red' && board.numberOfPlayers === 1) {
+        computerMove()
+      }
+    }
+  }
+}
+
+function computerMove() {
+  const validIds = computerValidMoves()
   const square = findSquare(validIds[0])
   let timeRemaining = 3
 
@@ -274,10 +273,8 @@ function computerPlay() {
     timeRemaining--
     if(timeRemaining === 0) {
       clearInterval(timerId)
-      if (!board.winner && board.currentPlayer.color === 'red') {
-        if(isSquareEmpty(square)) {
-          updateGameBoard(square)
-        }
+      if(isSquareEmpty(square)) {
+        updateGameBoard(square)
       }
     }
   }, 1000)
@@ -323,18 +320,21 @@ function showCurrentTurn() {
   document.querySelector('.' + color).querySelector('img').classList.add('active')
 }
 
-function resetBoard() {
+function resetGameConditions() {
   board.winner = null
   board.currentPlayer = blackPlayer
 }
 
-function resetGame() {
-  resetBoard()
-
+function resetBoard() {
   while (gameBoard.firstChild) {
     gameBoard.removeChild(gameBoard.firstChild)
   }
   createBoard()
+}
+
+function resetGame() {
+  resetGameConditions()
+  resetBoard()
 }
 
 document.addEventListener('DOMContentLoaded', ()=>{
