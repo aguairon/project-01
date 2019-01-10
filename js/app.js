@@ -5,6 +5,9 @@ let replayButton
 let banner
 let scoreSection
 
+const blackMoves = []
+const redMoves = []
+
 const redPlayer = {
   name: 'Desdemona',
   color: 'red',
@@ -180,13 +183,11 @@ function reassignDisks(square) {
 
       while (squareId) {
         if (colorOfSquare(document.getElementById(squareId)) &&
-        colorOfSquare(document.getElementById(direction(squareId)))&&
+        colorOfSquare(document.getElementById(direction(squareId))) &&
         colorOfSquare(document.getElementById(squareId)) !== board.currentPlayer.color ) {
           const disk = document.getElementById(squareId).querySelector('div')
-          // if (disk) {
           removePreviousPlayerDisks(disk)
           convertCurrentPlayerDisks(disk)
-          // }
         } else {
           return
         }
@@ -222,6 +223,7 @@ function play(square) {
         reassignDisks(square)
         setScore()
         board.isThereAWinner()
+        blackMoves.push(square)
         if(!board.winner) {
           board.changePlayersTurn()
           showCurrentTurn()
@@ -232,16 +234,13 @@ function play(square) {
     }
   }
   computerPlay()
+  console.log('red', redMoves, 'black', blackMoves)
 }
 
 
 function computerPlay() {
   if (board.currentPlayer.color === 'red') {
     const redDisks = document.querySelectorAll('.disk.red')
-    // const blackDisks = document.querySelectorAll('.disk.black')
-
-    console.log('reddisks', redDisks)
-    // console.log('blackdisks', blackDisks)
 
     const validIds = []
     redDisks.forEach(redDisk => {
@@ -250,21 +249,23 @@ function computerPlay() {
         directions.forEach(direction => {
           let squareId = direction(redDisk.parentElement.id)
 
-          while (document.getElementById(squareId) !== null &&
-          document.getElementById(squareId).querySelector('div') !== null) {
+          while (findSquare(squareId) &&
+          findSquare(squareId).querySelector('div') &&
+          colorOfSquare(findSquare(squareId)) !== board.currentPlayer.color) {
             squareId = direction(squareId)
           }
-          if (!!squareId && !validIds.includes(squareId)) {
+          if (!!squareId && !validIds.includes(squareId) && colorOfSquare(findSquare(squareId)) !== board.currentPlayer.color) {
             validIds.push(squareId)
           }
         })
       }
     })
 
+    console.log(validIds)
+
 
     const square = findSquare(validIds[0])
-    console.log(square)
-
+    redMoves.push(square)
 
     let timeRemaining = 3
 
@@ -278,10 +279,12 @@ function computerPlay() {
             addDisk(square)
             reassignDisks(square)
             setScore()
-            board.changePlayersTurn()
-            showCurrentTurn()
-          } else {
-            showWinnerBanner()
+            if(!board.winner) {
+              board.changePlayersTurn()
+              showCurrentTurn()
+            } else {
+              showWinnerBanner()
+            }
           }
         }
       }
@@ -296,7 +299,6 @@ function findSquare(id) {
 function playersInitialPositions() {
   const initialPositions = {27: 'black', 28: 'red', 35: 'red', 36: 'black'}
   const pos = Object.entries(initialPositions)
-  // console.log(pos)
   pos.forEach(position => addInitialDisks(findSquare(position[0]), position[1]))
 }
 
