@@ -4,11 +4,12 @@ let blackScore
 let replayButton
 let banner
 let scoreSection
+const numberOfDisks = 32
 
 const redPlayer = {
   name: 'Desdemona',
   color: 'red',
-  initialNumberOfDisks: 32,
+  initialNumberOfDisks: numberOfDisks,
   calculateCurrentNumberOfDisks: function() {
     return this.initialNumberOfDisks - board.calculateScore(this.color)
   }
@@ -17,7 +18,7 @@ const redPlayer = {
 const blackPlayer = {
   name: 'Othello',
   color: 'black',
-  initialNumberOfDisks: 32,
+  initialNumberOfDisks: numberOfDisks,
   calculateCurrentNumberOfDisks: function() {
     return this.initialNumberOfDisks - board.calculateScore(this.color)
   }
@@ -114,7 +115,7 @@ function oppositeAdjacentDiskDirections(square) {
 }
 
 function isAdjacentDiskOppositeInDirection(square, direction) {
-  const adjacent = document.getElementById(direction(square.id))
+  const adjacent = findSquare(direction(square.id))
   const adjacentColor = colorOfSquare(adjacent)
   return !!adjacentColor && adjacentColor !== board.currentPlayer.color
 }
@@ -123,7 +124,7 @@ function isAnyFollowingDisksInDirectionTheSame(square, direction) {
   let squareId = direction(square.id)
 
   while (squareId) {
-    if (colorOfSquare(document.getElementById(squareId)) === board.currentPlayer.color) {
+    if (colorOfSquare(findSquare(squareId)) === board.currentPlayer.color) {
       return true
     }
     squareId = direction(squareId)
@@ -149,10 +150,10 @@ function reassignDisks(square) {
       let squareId = direction(square.id)
 
       while (squareId) {
-        const colorOfThisSquare = colorOfSquare(document.getElementById(squareId))
-        const colorOfNextSquare = colorOfSquare(document.getElementById(direction(squareId)))
+        const colorOfThisSquare = colorOfSquare(findSquare(squareId))
+        const colorOfNextSquare = colorOfSquare(findSquare(direction(squareId)))
         if (colorOfThisSquare && colorOfNextSquare && colorOfThisSquare !== board.currentPlayer.color ) {
-          const disk = document.getElementById(squareId).querySelector('div')
+          const disk = findDisk(squareId)
           removePreviousPlayerDisks(disk)
           convertCurrentPlayerDisks(disk)
         } else {
@@ -183,8 +184,7 @@ function computerValidMoves() {
         let squareId = direction(redDisk.parentElement.id)
 
         while (findSquare(squareId) &&
-        findSquare(squareId).querySelector('div') &&
-        colorOfSquare(findSquare(squareId)) !== board.currentPlayer.color) {
+        findDisk(squareId) && colorOfSquare(findSquare(squareId)) !== board.currentPlayer.color) {
           squareId = direction(squareId)
         }
         if (!!squareId && !validIds.includes(squareId) && colorOfSquare(findSquare(squareId)) !== board.currentPlayer.color) {
@@ -258,6 +258,14 @@ function findSquare(id) {
   return document.getElementById(id)
 }
 
+function findDisk(id) {
+  return findSquare(id).querySelector('div')
+}
+
+function findImage(color) {
+  return document.querySelector(color).querySelector('img')
+}
+
 function playersInitialPositions() {
   const initialPositions = {27: blackPlayer.color, 28: redPlayer.color, 35: redPlayer.color, 36: blackPlayer.color}
   const pos = Object.entries(initialPositions)
@@ -290,8 +298,8 @@ function showCurrentTurn() {
     otherColor = blackPlayer.color
   }
 
-  document.querySelector('.' + otherColor).querySelector('img').classList.remove('active')
-  document.querySelector('.' + color).querySelector('img').classList.add('active')
+  findImage('.' + otherColor).classList.remove('active')
+  findImage('.' + color).classList.add('active')
 }
 
 function resetGameConditions() {
