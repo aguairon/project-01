@@ -45,8 +45,8 @@ const board = {
 }
 
 function setScore() {
-  redScore.innerText= board.calculateScore('red')
-  blackScore.innerText= board.calculateScore('black')
+  redScore.innerText= board.calculateScore(redPlayer.color)
+  blackScore.innerText= board.calculateScore(blackPlayer.color)
   board.checkForWinner()
 }
 
@@ -134,7 +134,7 @@ function isAnyFollowingDisksInDirectionTheSame(square, direction) {
 
 function removePreviousPlayerDisks(disk) {
   let classToRemove
-  board.currentPlayer.color === 'black' ? classToRemove = 'red' : classToRemove = 'black'
+  board.currentPlayer.color === blackPlayer.color ? classToRemove = redPlayer.color : classToRemove = blackPlayer.color
   disk.classList.remove(classToRemove)
 }
 
@@ -173,7 +173,7 @@ function validMove(square) {
 }
 
 function computerValidMoves() {
-  const redDisks = document.querySelectorAll('.disk.red')
+  const redDisks = document.querySelectorAll('.disk.' + redPlayer.color)
 
   const validIds = []
   redDisks.forEach(redDisk => {
@@ -181,7 +181,7 @@ function computerValidMoves() {
     if(directions.length > 0) {
       directions.forEach(direction => {
         let squareId = direction(redDisk.parentElement.id)
-          
+
         while (findSquare(squareId) &&
         findSquare(squareId).querySelector('div') &&
         colorOfSquare(findSquare(squareId)) !== board.currentPlayer.color) {
@@ -259,7 +259,7 @@ function findSquare(id) {
 }
 
 function playersInitialPositions() {
-  const initialPositions = {27: 'black', 28: 'red', 35: 'red', 36: 'black'}
+  const initialPositions = {27: blackPlayer.color, 28: redPlayer.color, 35: redPlayer.color, 36: blackPlayer.color}
   const pos = Object.entries(initialPositions)
   pos.forEach(position => addColorDisks(findSquare(position[0]), position[1]))
 }
@@ -282,12 +282,12 @@ function createBoard() {
 function showCurrentTurn() {
   let color
   let otherColor
-  if (board.currentPlayer.color === 'black') {
-    color = 'black'
-    otherColor = 'red'
+  if (board.currentPlayer.color === blackPlayer.color) {
+    color = blackPlayer.color
+    otherColor = redPlayer.color
   } else {
-    color = 'red'
-    otherColor = 'black'
+    color = redPlayer.color
+    otherColor = blackPlayer.color
   }
 
   document.querySelector('.' + otherColor).querySelector('img').classList.remove('active')
