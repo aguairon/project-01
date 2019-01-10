@@ -48,6 +48,7 @@ const board = {
 function setScore() {
   redScore.innerText= board.calculateScore('red')
   blackScore.innerText= board.calculateScore('black')
+  board.isThereAWinner()
 }
 
 function addDisk(square) {
