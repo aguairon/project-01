@@ -4,6 +4,9 @@ let blackScore
 let replayButton
 let banner
 let scoreSection
+let start
+let startButtons
+let game
 const numberOfDisks = 32
 
 const redPlayer = {
@@ -25,7 +28,7 @@ const blackPlayer = {
 }
 
 const board = {
-  numberOfPlayers: 1,
+  numberOfPlayers: null,
   currentPlayer: blackPlayer,
   winner: null,
   changePlayersTurn: function() {
@@ -329,13 +332,24 @@ document.addEventListener('DOMContentLoaded', ()=>{
   gameBoard = document.querySelector('.game-board')
   redScore = document.querySelector('.red span')
   blackScore = document.querySelector('.black span')
-  replayButton = document.querySelector('.button')
+  replayButton = document.querySelector('.replay')
   banner = document.querySelector('.winner')
   scoreSection = document.querySelector('.score')
+  start = document.querySelector('.start')
+  startButtons = document.querySelectorAll('.buttons .button')
+  game = document.querySelector('.game')
 
-
-  // addLogo()
-  // createBoard()
+  startButtons.forEach(button => button.addEventListener('click', () => {
+    start.classList.remove('active')
+    game.classList.add('active')
+    if (button.classList[1] === 'single-player') {
+      board.numberOfPlayers = 1
+    } else {
+      board.numberOfPlayers = 2
+    }
+    addLogo()
+    createBoard()
+  }))
 
   gameBoard.addEventListener('click', (e) =>  play(e.target))
 
