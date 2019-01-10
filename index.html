@@ -9,24 +9,34 @@
   </head>
   <body>
     <header>
-      <img src="images/Othello (board game) free icon 4.jpeg" alt="othello logo">
     </header>
     <main>
-      <div class="winner">
-        The winner is:
-      </div>
-      <div class="score active">
-        <div class="turn red">
-          <div>Desdemona: <span></span></div>
-          <img src="./images/rose-icon.jpg" alt="">
+      <div class="start active">
+        <img src="./images/othelo-logo.png" alt="othello logo">
+        <div class="buttons">
+          <button class="button single-player">Single Player</button>
+          <button class="button two-player">Two players</button>
         </div>
-        <div class="turn black">
-          <img src="./images/icon-sword.jpg" alt="">
-          <div>Othello: <span></span></div>
+        <div>
+          Each player has 32 disks. Get rid of yours by surrounding the ones of your opponent to win. Good luck!
         </div>
       </div>
-      <div class="game-board"></div>
-      <button class="button">Play again</button>
+      <div class="game">
+        <div class="winner">
+        </div>
+        <div class="score active">
+          <div class="turn red">
+            <div>Desdemona: <span></span></div>
+            <img src="./images/rose-icon.jpg" alt="">
+          </div>
+          <div class="turn black">
+            <img src="./images/icon-sword.jpg" alt="">
+            <div>Othello: <span></span></div>
+          </div>
+        </div>
+        <div class="game-board"></div>
+        <button class="button">Play again</button>
+      </div>
     </main>
   </body>
 </html>

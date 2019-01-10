@@ -318,6 +318,12 @@ function resetGame() {
   resetBoard()
   resetGameConditions()
 }
+function addLogo(){
+  const header = document.querySelector('header')
+  const logo = document.createElement('img')
+  logo.setAttribute('src', 'images/Othello (board game) free icon 4.jpeg')
+  header.append(logo)
+}
 
 document.addEventListener('DOMContentLoaded', ()=>{
   gameBoard = document.querySelector('.game-board')
@@ -327,7 +333,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
   banner = document.querySelector('.winner')
   scoreSection = document.querySelector('.score')
 
-  createBoard()
+
+  // addLogo()
+  // createBoard()
 
   gameBoard.addEventListener('click', (e) =>  play(e.target))
 
