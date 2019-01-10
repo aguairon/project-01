@@ -252,15 +252,21 @@ function updateGameBoard(square) {
 
 function play(square) {
   if (!board.winner) {
-    if(isSquareEmpty(square)) {
+    if(board.numberOfPlayers === 2 || board.numberOfPlayers === 1 && board.currentPlayer === blackPlayer) {
       if (validMove(square)) {
-        updateGameBoard(square)
+        humanMove(square)
       }
 
-      if (board.currentPlayer.color === 'red' && board.numberOfPlayers === 1) {
+      if (board.currentPlayer === redPlayer && board.numberOfPlayers === 1) {
         computerMove()
       }
     }
+  }
+}
+
+function humanMove(square) {
+  if (validMove(square)) {
+    updateGameBoard(square)
   }
 }
 
