@@ -19,7 +19,7 @@ const blackPlayer = {
   color: 'black',
   initialNumberOfDisks: 32,
   calculateCurrentNumberOfDisks: function() {
-    return parseInt(this.initialNumberOfDisks) - board.calculateScore(this.color)
+    return this.initialNumberOfDisks - board.calculateScore(this.color)
   }
 }
 
@@ -35,10 +35,9 @@ const board = {
     }
   },
   calculateScore: function(color) {
-    // console.log(document.querySelectorAll(`.disk.${color}`))
     return document.querySelectorAll(`.disk.${color}`).length
   },
-  isThereAWinner: function() {
+  checkForWinner: function() {
     if(this.currentPlayer.calculateCurrentNumberOfDisks() <= 0) {
       this.winner = this.currentPlayer
     }
@@ -48,17 +47,14 @@ const board = {
 function setScore() {
   redScore.innerText= board.calculateScore('red')
   blackScore.innerText= board.calculateScore('black')
-  board.isThereAWinner()
+  board.checkForWinner()
 }
 
 function addDisk(square) {
-  const disk = document.createElement('div')
-  disk.classList.add('disk')
-  disk.classList.add(board.currentPlayer.color)
-  square.append(disk)
+  addColorDisks(square, board.currentPlayer.color)
 }
 
-function addInitialDisks(square, color) {
+function addColorDisks(square, color) {
   const disk = document.createElement('div')
   disk.classList.add('disk')
   disk.classList.add(color)
@@ -112,37 +108,9 @@ function colorOfSquare(square) {
 }
 
 function oppositeAdjacentDiskDirections(square) {
-  const directions = []
-  if (isAdjacentDiskOppositeInDirection(square, right)) {
-    directions.push(right)
-  }
-  if (isAdjacentDiskOppositeInDirection(square, left)) {
-    directions.push(left)
-  }
-  if (isAdjacentDiskOppositeInDirection(square, up)) {
-    directions.push(up)
-  }
-  if (isAdjacentDiskOppositeInDirection(square, down)) {
-    directions.push(down)
-  }
-
-  if (isAdjacentDiskOppositeInDirection(square, rightdown)) {
-    directions.push(rightdown)
-  }
-
-  if (isAdjacentDiskOppositeInDirection(square, rightup)) {
-    directions.push(rightup)
-  }
-
-  if (isAdjacentDiskOppositeInDirection(square, leftdown)) {
-    directions.push(leftdown)
-  }
-
-  if (isAdjacentDiskOppositeInDirection(square, leftup)) {
-    directions.push(leftup)
-  }
-
-  return directions
+  return [right, left, up, down, rightdown, rightup, leftdown, leftup].filter(direction =>
+    isAdjacentDiskOppositeInDirection(square, direction)
+  )
 }
 
 function isAdjacentDiskOppositeInDirection(square, direction) {
@@ -181,9 +149,9 @@ function reassignDisks(square) {
       let squareId = direction(square.id)
 
       while (squareId) {
-        if (colorOfSquare(document.getElementById(squareId)) &&
-        colorOfSquare(document.getElementById(direction(squareId))) &&
-        colorOfSquare(document.getElementById(squareId)) !== board.currentPlayer.color ) {
+        const colorOfThisSquare = colorOfSquare(document.getElementById(squareId))
+        const colorOfNextSquare = colorOfSquare(document.getElementById(direction(squareId)))
+        if (colorOfThisSquare && colorOfNextSquare && colorOfThisSquare !== board.currentPlayer.color ) {
           const disk = document.getElementById(squareId).querySelector('div')
           removePreviousPlayerDisks(disk)
           convertCurrentPlayerDisks(disk)
@@ -283,7 +251,7 @@ function computerMove() {
         updateGameBoard(square)
       }
     }
-  }, 1000)
+  }, 500)
 }
 
 function findSquare(id) {
@@ -293,7 +261,7 @@ function findSquare(id) {
 function playersInitialPositions() {
   const initialPositions = {27: 'black', 28: 'red', 35: 'red', 36: 'black'}
   const pos = Object.entries(initialPositions)
-  pos.forEach(position => addInitialDisks(findSquare(position[0]), position[1]))
+  pos.forEach(position => addColorDisks(findSquare(position[0]), position[1]))
 }
 
 function createBoard() {
@@ -339,8 +307,8 @@ function resetBoard() {
 }
 
 function resetGame() {
-  resetGameConditions()
   resetBoard()
+  resetGameConditions()
 }
 
 document.addEventListener('DOMContentLoaded', ()=>{
