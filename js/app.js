@@ -273,7 +273,7 @@ function computerMove() {
         updateGameBoard(square)
       }
     }
-  }, 1000)
+  }, 1450)
 }
 
 function findSquare(id) {
