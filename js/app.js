@@ -221,11 +221,30 @@ function updateGameBoard(square) {
   }
 }
 
+function deleteItems(item) {
+  while (item.firstChild) {
+    item.removeChild(item.firstChild)
+  }
+}
+
 function play(square) {
   if (!board.winner) {
     if(board.numberOfPlayers === 2 || board.numberOfPlayers === 1 && board.currentPlayer === blackPlayer) {
       if (validMove(square)) {
         humanMove(square)
+      } else {
+        if(isSquareEmpty(square)) {
+          addColorDisks(square, 'grey')
+        }
+
+        let timeRemaining = 1
+        const timerId = setInterval(() => {
+          timeRemaining--
+          if(timeRemaining === 0) {
+            clearInterval(timerId)
+            deleteItems(square)
+          }
+        }, 1000)
       }
 
       if (board.currentPlayer === redPlayer && board.numberOfPlayers === 1) {
@@ -244,7 +263,7 @@ function humanMove(square) {
 function computerMove() {
   const validIds = computerValidMoves()
   const square = findSquare(validIds[0])
-  let timeRemaining = 3
+  let timeRemaining = 1
 
   const timerId = setInterval(() => {
     timeRemaining--
@@ -254,7 +273,7 @@ function computerMove() {
         updateGameBoard(square)
       }
     }
-  }, 500)
+  }, 1500)
 }
 
 function findSquare(id) {
