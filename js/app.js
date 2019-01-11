@@ -263,7 +263,6 @@ function humanMove(square) {
 function computerMove() {
   const validIds = computerValidMoves()
   const randomValidId = Math.floor(Math.random() * validIds.length)
-  // const square = findSquare(validIds[0])
   const square = findSquare(validIds[randomValidId])
   let timeRemaining = 1
 
