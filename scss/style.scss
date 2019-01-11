@@ -3,6 +3,11 @@
   to {opacity: 1;}
 }
 
+@keyframes fadeOut {
+  from {opacity: 0.75;}
+  to {opacity: 0}
+}
+
 $border-color: #4b4b4b;
 $height: 60px;
 
@@ -49,7 +54,7 @@ body {
         display: block;
       }
     }
-    
+
     .score {
       display: none;
       &.active {
@@ -65,7 +70,7 @@ body {
           img.active {
             visibility: visible;
             animation-name: fadeIn;
-            animation-duration: 10ms;
+            animation-duration: 500ms;
           }
         }
       }
@@ -81,6 +86,10 @@ body {
         width: $height;
         border: 2px solid $border-color;
         box-sizing: border-box;
+        img {
+          height: 10px;
+          margin: 0;
+        }
       }
 
       .disk{
@@ -94,6 +103,10 @@ body {
         background-color: crimson;
       } .black {
         background-color: $border-color;
+      } .grey {
+        background-color: lightgrey;
+        animation-name: fadeIn;
+        animation-name: fadeOut
       }
     }
     .button {
