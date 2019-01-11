@@ -14,3 +14,5 @@
 1. Open the `index.html` in your browser of choice
 
 ## My Game - Othello
+![Othello game]<img width="609" alt="screenshot 2019-01-11 at 11 01 50" src="https://user-images.githubusercontent.com/9445433/51030209-97564c80-1590-11e9-8d7c-ded63a618cc0.png">
+
