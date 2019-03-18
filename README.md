@@ -44,6 +44,6 @@ After each turn we check if any player has no disks left, in that case there is 
 
 When I got to this point I decided to implement  the option to play against the computer.  The computer is playing as Desdemona and the human player as Othello. The computer uses basically the same logic that was already in place.  The computer checks all directions for valid moves and then chooses the first option to place a red disk. 
 
-
+On the last day I added the screen in which you could choose the player mode. I also added user feedback in the case that a non-valid square was clicked on. 
 
 
