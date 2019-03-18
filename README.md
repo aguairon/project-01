@@ -32,7 +32,7 @@ The game is a version of the reversi game, a strategy game for two players playe
 4. The winner is the first player to have played all 32 disks
 <img width="1287" alt="Screenshot 2019-03-18 at 13 44 22" src="https://user-images.githubusercontent.com/9445433/54534297-f7e47a00-4983-11e9-930d-9718431b9c1e.png">
 
-### Process
+## Process
 
 The first step was to create the game-board in which the pieces are placed. This was achieved by creating a 'game-board' div that contained 64 'square' divs. Then I placed the 4 initial blocks. I created a function that takes a square id and a player's colour. This function then creates a disk div and appends it to the square div. For these 4 initial disks the ids and colours are hardcoded. For all other disks the colour is current player's colour and the square id is the id of whichever square was clicked on.
 
@@ -42,8 +42,12 @@ The next step was to write the logic that would reassign the flanked disks to th
 
 After each turn we check if any player has no disks left, in that case there is a banner indicating who won. If not the score updates.
 
-When I got to this point I decided to implement  the option to play against the computer.  The computer is playing as Desdemona and the human player as Othello. The computer uses basically the same logic that was already in place.  The computer checks all directions for valid moves and then chooses the first option to place a red disk. 
+When I got to this point I decided to implement  the option to play against the computer.  The computer is playing as Desdemona and the human player as Othello. The computer uses basically the same logic that was already in place.  The computer checks all directions for valid moves and then chooses the a ramdom option to place a red disk. 
 
 On the last day I added the screen in which you could choose the player mode. I also added user feedback in the case that a non-valid square was clicked on. 
+
+### Wins
+
+For me the greated win was the function that reassigned the 
 
 
