@@ -28,3 +28,4 @@ There is also a button to restart the game.
 <img width="1382" alt="screenshot 2019-01-11 at 11 41 12" src="https://user-images.githubusercontent.com/9445433/51031864-d2a74a00-1595-11e9-9fa0-8843e22ac598.png">
 
 2. Once the option is chosen the 8 X 8 board will appear with 2 disks on each colour on their initial positions. The turns are indicated by an icon next to the two players' name.
+<img width="673" alt="Screenshot 2019-03-18 at 13 00 52" src="https://user-images.githubusercontent.com/9445433/54531755-fadc6c00-497d-11e9-8ef5-13a7433807f8.png">
