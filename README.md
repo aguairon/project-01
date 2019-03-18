@@ -48,7 +48,7 @@ On the last day I added the screen in which you could choose the player mode. I 
 
 ### Wins
 
-For me the greated win was the function that reassigned the 
+For me the greatest win was the function that checked the opponents disks on all directions to see if they had to be changed or not. The logic is quite complex and quite a few conditions had to be met.
 ```
 function reassignDisks(square) {
   const directions = [right, left, up, down, rightdown, rightup, leftdown, leftup]
@@ -70,5 +70,10 @@ function reassignDisks(square) {
       }
     }
   })
-} ```
+} 
+```
+
+### Future features
+
+It would be nice to make the site a bit more user friendly. I have noticed that people playing it were not always aware when it was their turn. Also to add a bit a bigger delay on the computer placing a disk as you wer focusing of the disks changing colour and before you really notice they are changing back not being aware the computer has already played.
 
