@@ -49,5 +49,26 @@ On the last day I added the screen in which you could choose the player mode. I 
 ### Wins
 
 For me the greated win was the function that reassigned the 
+```
+function reassignDisks(square) {
+  const directions = [right, left, up, down, rightdown, rightup, leftdown, leftup]
+  directions.forEach(direction => {
+    if (isAnyFollowingDisksInDirectionTheSame(square, direction)) {
+      let squareId = direction(square.id)
 
+      while (squareId) {
+        const colorOfThisSquare = colorOfSquare(findSquare(squareId))
+        const colorOfNextSquare = colorOfSquare(findSquare(direction(squareId)))
+        if (colorOfThisSquare && colorOfNextSquare && colorOfThisSquare !== board.currentPlayer.color ) {
+          const disk = findDisk(squareId)
+          removePreviousPlayerDisks(disk)
+          convertCurrentPlayerDisks(disk)
+        } else {
+          return
+        }
+        squareId = direction(squareId)
+      }
+    }
+  })
+} ```
 
