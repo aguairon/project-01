@@ -29,6 +29,10 @@ The game is a version of the reversi game, a strategy game for two players playe
 3. The player can place a disk by clicking on the square of their choice. It is valid move the disk will appear and all the flanked opponents' pieces will be replaced. If it is not valid the shadow of a disk will appear and disappear.
 ![othello1](https://user-images.githubusercontent.com/9445433/54533986-52310b00-4983-11e9-85d9-2eb49c84487f.gif)
 
+4. The winner is the first player to ave played all 32 disks
+<img width="1287" alt="Screenshot 2019-03-18 at 13 44 22" src="https://user-images.githubusercontent.com/9445433/54534297-f7e47a00-4983-11e9-930d-9718431b9c1e.png">
+
+
 
 
 
