@@ -27,7 +27,7 @@ The game is a version of the reversi game, a strategy game for two players playe
 <img width="1259" alt="Screenshot 2019-03-18 at 13 02 37" src="https://user-images.githubusercontent.com/9445433/54531821-219aa280-497e-11e9-8705-83ebda2deed5.png">
 
 3. The player can place a disk by clicking on the square of their choice. It is valid move the disk will appear and all the flanked opponents' pieces will be replaced. If it is not valid the shadow of a disk will appear and disappear.
-![othello111](https://user-images.githubusercontent.com/9445433/54533057-3dec0e80-4981-11e9-99bc-86d1c5c0ff8b.gif)
+![othello](https://user-images.githubusercontent.com/9445433/54533323-cbc7f980-4981-11e9-95c0-fdd4aac70c23.gif)
 
 
 
