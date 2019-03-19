@@ -1,7 +1,7 @@
 # General Assembly Project 1 : Simple front-end game
 
 ### Timeframe
-7 days
+7 days. Solo project
 
 ## Technologies used
 * JavaScript (ES6) 
@@ -34,7 +34,7 @@ The game is a version of the reversi game, a strategy game for two players playe
 
 ## Process
 
-The first step was to create the game-board in which the pieces are placed. This was achieved by creating a 'game-board' div that contained 64 'square' divs. Then I placed the 4 initial blocks. I created a function that takes a square id and a player's colour. This function then creates a disk div and appends it to the square div. For these 4 initial disks the ids and colours are hardcoded. For all other disks the colour is current player's colour and the square id is the id of whichever square was clicked on.
+The first step was to create the game-board in which the pieces are placed. The board contains 64 divs and 4 initial disks. The colour and positions for these disks are hardcoded. For all other disks the colour is the current player's colour and the square is whichever square the player clicks on.
 
 Once this was achieved the next step was to write the logic that would allow the player to place a disk only on valid squares. The function that does this checks the square clicked to see, first, if in any direction, there is an adjacent opponents' disk and, then, if in that direction there are any of the players'. If this is the case the disk appears on the clicked square and the turn goes to the other player.
 
